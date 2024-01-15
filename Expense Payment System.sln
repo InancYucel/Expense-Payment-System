@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Base", "Ep.Base\Ep.Base.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Schema", "Ep.Schema\Ep.Schema.csproj", "{CF1837C3-5760-4049-9AFA-6AADB18D9017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Bussiness", "Ep.Bussiness\Ep.Bussiness.csproj", "{9C622ADA-A2E9-476E-930D-3B02255D2189}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Business", "Ep.Business\Ep.Business.csproj", "{9C622ADA-A2E9-476E-930D-3B02255D2189}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Data", "Ep.Data\Ep.Data.csproj", "{9CDFA40E-1260-4DA7-94AE-BF956FECBADD}"
 EndProject

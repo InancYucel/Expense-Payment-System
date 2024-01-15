@@ -4,11 +4,17 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Bussiness</RootNamespace>
+        <RootNamespace>Business</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
       <PackageReference Include="MediatR" Version="12.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ep.Data\Ep.Data.csproj" />
+      <ProjectReference Include="..\Ep.Schema\Ep.Schema.csproj" />
     </ItemGroup>
 
 </Project>

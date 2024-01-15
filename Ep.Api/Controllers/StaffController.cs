@@ -1,5 +1,6 @@
 using Base.Response;
-using Bussiness.Cqrs;
+using Business.Cqrs;
+using Data.Insert;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Schema;
