@@ -1,5 +1,7 @@
 using System.Reflection;
-using Bussiness.Queries;
+using AutoMapper;
+using Business.Mapper;
+using Business.Queries;
 using Data.DbContext;
 using Data.Insert;
 using Microsoft.Data.SqlClient;
@@ -10,34 +12,34 @@ namespace Expense_Payment_System;
 public class Startup
 {
     private readonly IConfiguration _configuration;
-    private readonly InsertRows _insertRows;
+    private readonly IInsertRows _insertRows;
     
-    public Startup(IConfiguration configuration, InsertRows instertRows)
+    public Startup(IConfiguration configuration)
     {
         _configuration = configuration;
-        _insertRows = instertRows;
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
         //For EntityFramework DB
         var connection = _configuration.GetConnectionString("MsSqlConnection");
-        var option = new DbContextOptionsBuilder<EpDbContext>()
+        /*var option = new DbContextOptionsBuilder<EpDbContext>()
             .UseSqlServer(new SqlConnection(connection))
-            .Options;
+            .Options;*/
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StaffQueryHandler).GetTypeInfo().Assembly));
-        
+        var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperConfig()));
+        services.AddSingleton(mapperConfig.CreateMapper());
         services.AddDbContext<EpDbContext>(options => options.UseSqlServer(connection));
-        
+        services.AddScoped<IInsertRows, InsertRows>();
         services.AddControllers(); //Added Controllers folder classes
+        
         services.AddEndpointsApiExplorer(); //  Discovers endpoints
         services.AddSwaggerGen(); //Prepares documentation for Swagger
-        
-        _insertRows.InitializeDatabase();
+        //_insertRows.InsertStaffRows();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInsertRows ins)
     {
         // Configure the HTTP request pipeline.
         if (env.IsDevelopment()) //If we are working in a development environment, UI is enabled.
@@ -50,5 +52,6 @@ public class Startup
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(x => { x.MapControllers(); }); 
+        ins.InitializeDatabase();
     }
 }

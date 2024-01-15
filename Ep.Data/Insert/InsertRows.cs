@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Data.Insert;
 
-public class InsertRows
+public class InsertRows : IInsertRows
 {
     private readonly EpDbContext _dbContext;
 
@@ -51,4 +51,9 @@ public class InsertRows
     {
         public List<Staff> Staff { get; set; }
     }
+}
+
+public interface IInsertRows
+{
+    void InitializeDatabase();
 }
