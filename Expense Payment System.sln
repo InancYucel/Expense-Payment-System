@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Schema", "Ep.Schema\Ep.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Bussiness", "Ep.Bussiness\Ep.Bussiness.csproj", "{9C622ADA-A2E9-476E-930D-3B02255D2189}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{9CDFA40E-1260-4DA7-94AE-BF956FECBADD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ep.Data", "Ep.Data\Ep.Data.csproj", "{9CDFA40E-1260-4DA7-94AE-BF956FECBADD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

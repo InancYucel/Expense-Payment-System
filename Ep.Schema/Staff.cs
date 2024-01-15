@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Base.Schema;
 
 namespace Schema;
@@ -9,6 +10,7 @@ public class StaffRequest : BaseRequest
     public string IBAN { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public DateTime LastActivityDate { get; set; }
 }
 
 public class StaffResponse : BaseResponse
@@ -18,4 +20,5 @@ public class StaffResponse : BaseResponse
     public string IBAN { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public DateTime LastActivityDate { get; set; }
 }
