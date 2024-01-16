@@ -25,4 +25,36 @@ public class StaffController : ControllerBase
         var result = await _mediator.Send(operation);
         return result;
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ApiResponse<StaffResponse>> Get(int id)
+    {
+        var operation = new StaffCqrs.GetStaffByIdQuery(id);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
+    
+    [HttpPost]
+    public async Task<ApiResponse<StaffResponse>> Post([FromBody] StaffRequest account)
+    {
+        var operation = new StaffCqrs.CreateStaffCommand(account);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse> Put(int id, [FromBody] StaffRequest account)
+    {
+        var operation = new StaffCqrs.UpdateStaffCommand(id, account);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ApiResponse> Delete(int id)
+    {
+        var operation = new StaffCqrs.DeleteStaffCommand(id);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
 }

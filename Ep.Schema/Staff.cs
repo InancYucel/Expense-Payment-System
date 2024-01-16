@@ -21,4 +21,5 @@ public class StaffResponse : BaseResponse
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime LastActivityDate { get; set; }
+    public bool IsActive { get; set; }
 }
