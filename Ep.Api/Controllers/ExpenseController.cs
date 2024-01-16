@@ -9,43 +9,43 @@ namespace Expense_Payment_System.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class StaffController : ControllerBase
+public class ExpensesController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public StaffController(IMediator mediator)
+    public ExpensesController(IMediator mediator)
     {
         _mediator = mediator;
     }
     
     [HttpGet]
-    public async Task<ApiResponse<List<StaffResponse>>> Get()
+    public async Task<ApiResponse<List<ExpensesResponse>>> Get()
     {
-        var operation = new StaffCqrs.GetAllStaffQuery();
+        var operation = new ExpensesCqrs.GetAllExpensesQuery();
         var result = await _mediator.Send(operation);
         return result;
     }
     
     [HttpGet("{id:int}")]
-    public async Task<ApiResponse<StaffResponse>> Get(int id)
+    public async Task<ApiResponse<ExpensesResponse>> Get(int id)
     {
-        var operation = new StaffCqrs.GetStaffByIdQuery(id);
+        var operation = new ExpensesCqrs.GetExpensesByIdQuery(id);
         var result = await _mediator.Send(operation);
         return result;
     }
     
     [HttpPost]
-    public async Task<ApiResponse<StaffResponse>> Post([FromBody] StaffRequest staffRequest)
+    public async Task<ApiResponse<ExpensesResponse>> Post([FromBody] ExpensesRequest account)
     {
-        var operation = new StaffCqrs.CreateStaffCommand(staffRequest);
+        var operation = new ExpensesCqrs.CreateExpensesCommand(account);
         var result = await _mediator.Send(operation);
         return result;
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ApiResponse> Put(int id, [FromBody] StaffRequest staffRequest)
+    public async Task<ApiResponse> Put(int id, [FromBody] ExpensesRequest account)
     {
-        var operation = new StaffCqrs.UpdateStaffCommand(id, staffRequest);
+        var operation = new ExpensesCqrs.UpdateExpensesCommand(id, account);
         var result = await _mediator.Send(operation);
         return result;
     }
@@ -53,7 +53,7 @@ public class StaffController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ApiResponse> Delete(int id)
     {
-        var operation = new StaffCqrs.DeleteStaffCommand(id);
+        var operation = new ExpensesCqrs.DeleteExpensesCommand(id);
         var result = await _mediator.Send(operation);
         return result;
     }

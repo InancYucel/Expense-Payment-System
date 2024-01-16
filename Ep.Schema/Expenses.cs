@@ -2,11 +2,10 @@ using Base.Schema;
 
 namespace Schema;
 
-public class ExpenseRequest : BaseRequest
+public class ExpensesRequest : BaseRequest
 {
     public int StaffId { get; set; }
-    public int ExpenseNumber { get; set; }
-    public double InvoiceReferenceNumber { get; set; }
+    public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
     public DateTime InvoiceDate { get; set; }
     public string InvoiceDescription { get; set; }
@@ -14,13 +13,14 @@ public class ExpenseRequest : BaseRequest
     public string ExpenseRequestStatus { get; set; } 
 }
 
-public class ExpenseResponse : BaseResponse
+public class ExpensesResponse : BaseResponse
 {
+    public int Id { get; set; }
     public int StaffId { get; set; }
-    public int ExpenseNumber { get; set; }
-    public double InvoiceReferenceNumber { get; set; }
+    public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
     public string InvoiceDescription { get; set; }
     public string ExpenseClaimDescription { get; set; }
     public string ExpenseRequestStatus { get; set; }
+    public bool IsActive { get; set; }
 }

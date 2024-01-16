@@ -9,8 +9,8 @@ namespace Data.Entity;
 [Table("Expenses", Schema = "dbo")]
 public class Expenses : BaseEntity
 {
-    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int StaffId { get; set; }
     public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
@@ -33,7 +33,6 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
         builder.Property(x => x.ExpenseRequestStatus).IsRequired(true).HasMaxLength(50);
         
         builder.HasIndex(x => x.Id).IsUnique(true);
-        builder.HasIndex(x => x.StaffId).IsUnique(true);
         builder.HasIndex(x => x.InvoiceReferenceNumber).IsUnique(true);
 
         builder.HasKey(x => x.Id);
