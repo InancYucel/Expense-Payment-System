@@ -34,7 +34,7 @@ public class StaffQueryHandler :
         CancellationToken cancellationToken)
     {
         var entity =  await _dbContext.Set<Staff>()
-            .FirstOrDefaultAsync(x => x.StaffNumber == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {

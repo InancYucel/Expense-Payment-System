@@ -1,0 +1,31 @@
+{
+  "Expenses": [
+    {
+      "StaffId": "1",
+      "InvoiceReferenceNumber": "B012020000073165",
+      "InvoiceAmount": "1050",
+      "InvoiceDescription": "Fuel",
+      "ExpenseClaimDescription": "Gasoline expenditure",
+      "ExpenseRequestStatus": "Waiting",
+      "IsActive": 1
+    },
+    {
+      "StaffId": "2",
+      "InvoiceReferenceNumber": "C939394771728394",
+      "InvoiceAmount": "300",
+      "InvoiceDescription": "Food",
+      "ExpenseClaimDescription": "Lunch",
+      "ExpenseRequestStatus": "Waiting",
+      "IsActive": 1
+    },
+    {
+      "StaffId": "3",
+      "InvoiceReferenceNumber": "D010294839234234",
+      "InvoiceAmount": "10000",
+      "InvoiceDescription": "Repair",
+      "ExpenseClaimDescription": "Traffic Accident",
+      "ExpenseRequestStatus": "Waiting",
+      "IsActive": 1
+    }
+  ]
+}

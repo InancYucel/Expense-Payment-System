@@ -26,7 +26,7 @@ public class StaffCommandHandler :
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.CreateStaffCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<StaffRequest, Staff>(request.Model);
-        entity.StaffNumber = new Random().Next(10000000, 99999999); //TODO içerideki kayıtlarla çakışmasın kontrol lazım
+        entity.Id = new Random().Next(10000000, 99999999); //TODO içerideki kayıtlarla çakışmasın kontrol lazım
         
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -37,7 +37,7 @@ public class StaffCommandHandler :
 
     public async Task<ApiResponse> Handle(StaffCqrs.UpdateStaffCommand request, CancellationToken cancellationToken)
     {
-        var fromDb = await _dbContext.Set<Staff>().Where(x => x.StaffNumber == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var fromDb = await _dbContext.Set<Staff>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
             return new ApiResponse("Record not found");
@@ -47,7 +47,7 @@ public class StaffCommandHandler :
         
         fromDb.FirstName = request.Model.FirstName;
         fromDb.LastName = request.Model.LastName;
-        fromDb.StaffNumber = request.Model.StaffNumber;
+        fromDb.Id = request.Model.Id;
         fromDb.IdentityNumber = request.Model.IdentityNumber;
         fromDb.IBAN = request.Model.IBAN;
         
@@ -57,7 +57,7 @@ public class StaffCommandHandler :
 
     public async Task<ApiResponse> Handle(StaffCqrs.DeleteStaffCommand request, CancellationToken cancellationToken)
     {
-        var fromDb = await _dbContext.Set<Staff>().Where(x => x.StaffNumber == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var fromDb = await _dbContext.Set<Staff>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         
         if (fromDb == null)
         {

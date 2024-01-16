@@ -23,10 +23,6 @@ public class Startup
     {
         //For EntityFramework DB
         var connection = _configuration.GetConnectionString("MsSqlConnection");
-        /*var option = new DbContextOptionsBuilder<EpDbContext>()
-            .UseSqlServer(new SqlConnection(connection))
-            .Options;*/
-        
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StaffQueryHandler).GetTypeInfo().Assembly));
         var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperConfig()));
         services.AddSingleton(mapperConfig.CreateMapper());
@@ -36,7 +32,6 @@ public class Startup
         
         services.AddEndpointsApiExplorer(); //  Discovers endpoints
         services.AddSwaggerGen(); //Prepares documentation for Swagger
-        //_insertRows.InsertStaffRows();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInsertRows ins)

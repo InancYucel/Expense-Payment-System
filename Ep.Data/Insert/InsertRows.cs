@@ -13,22 +13,56 @@ public class InsertRows : IInsertRows
         _dbContext = dbContext;
     }
 
-    public void InsertStaffRows()
+    public void InitializeDatabase()
     {
-        Root? root;
+        if (!(_dbContext.Staff.Any()))
+        {
+            InsertStaffRows();
+        }
+        if(!(_dbContext.Expenses.Any()))
+        {
+            InsertExpensesRows();
+        }
+    }
+
+    private void InsertStaffRows()
+    {
         try
         {
             var staffJson = new StreamReader(@"..\Ep.Data\DataToAdd\Staff.json");
             using (staffJson)
             {
                 var json = staffJson.ReadToEnd();
-                root = JsonConvert.DeserializeObject<Root>(json);
+                var root = JsonConvert.DeserializeObject<StaffRoot>(json);
                 if (root != null)
                     foreach (var staff in root.Staff)
                     {
                         _dbContext.Staff.Add(staff);
                     }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
 
+    private void InsertExpensesRows()
+    {
+        try
+        {
+            var expensesJson = new StreamReader(@"..\Ep.Data\DataToAdd\Expenses.json");
+            using (expensesJson)
+            {
+                var json = expensesJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<ExpensesRoot>(json);
+                if (root != null)
+                    foreach (var expense in root.Expenses)
+                    {
+                        _dbContext.Expenses.Add(expense);
+                    }
                 _dbContext.SaveChanges();
             }
         }
@@ -39,17 +73,13 @@ public class InsertRows : IInsertRows
         }
     }
     
-    public void InitializeDatabase()
-    {
-        if (!(_dbContext.Staff.Any()))
-        {
-            InsertStaffRows();
-        }
-    }
-    
-    private class Root
+    private class StaffRoot
     {
         public List<Staff> Staff { get; set; }
+    }
+    private class ExpensesRoot
+    {
+        public List<Expenses> Expenses { get; set; }
     }
 }
 

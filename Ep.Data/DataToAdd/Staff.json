@@ -1,31 +1,31 @@
 {
   "Staff": [
     {
-      "StaffNumber": "1",
+      "Id": "1",
       "IdentityNumber": "24604424443",
       "IBAN": "TR330006100519786457841326",
       "FirstName": "Inanc",
       "LastName": "Yucel",
       "LastActivityDate": "2015-05-16T05:50:06",
-      "IsActive": "1"
+      "IsActive": 1
     },
     {
-      "StaffNumber": "2",
+      "Id": "2",
       "IdentityNumber": "32572342354",
       "IBAN": "TR125346346344475685454908",
       "FirstName": "Debreli",
       "LastName": "Hasan",
       "LastActivityDate": "2005-05-16T05:50:06",
-      "IsActive": "1"
+      "IsActive": 1
     },
     {
-      "StaffNumber": "3",
+      "Id": "3",
       "IdentityNumber": "12385562345",
       "IBAN": "TR904762910375047549273483",
       "FirstName": "Koca",
       "LastName": "Yusuf",
       "LastActivityDate": "2015-05-16T05:50:06",
-      "IsActive": "1"
+      "IsActive": 1
     }
   ]
 }
