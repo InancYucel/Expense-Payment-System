@@ -11,7 +11,8 @@ namespace Business.Queries;
 
 public class ExpensesQueryHandler : 
     IRequestHandler<ExpensesCqrs.GetAllExpensesQuery, ApiResponse<List<ExpensesResponse>>>,
-    IRequestHandler<ExpensesCqrs.GetExpensesByIdQuery, ApiResponse<ExpensesResponse>>
+    IRequestHandler<ExpensesCqrs.GetExpenseByIdQuery, ApiResponse<ExpensesResponse>>,
+    IRequestHandler<ExpensesCqrs.GetExpenseByStaffIdQuery, ApiResponse<List<ExpensesResponse>>>
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
@@ -30,11 +31,10 @@ public class ExpensesQueryHandler :
         return new ApiResponse<List<ExpensesResponse>>(mappedList);
     }
     
-    public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.GetExpensesByIdQuery request,
+    public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.GetExpenseByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<Expenses>()
-            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<Expenses>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
@@ -43,5 +43,17 @@ public class ExpensesQueryHandler :
         
         var mapped = _mapper.Map<Expenses, ExpensesResponse>(entity);
         return new ApiResponse<ExpensesResponse>(mapped);
+    }
+    
+    public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.GetExpenseByStaffIdQuery request,CancellationToken cancellationToken)
+    {
+        var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId).ToListAsync(cancellationToken);
+
+        if (!list.Any())
+        {
+            return new ApiResponse<List<ExpensesResponse>>("Record not found");
+        }
+        var mappedList = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
+        return new ApiResponse<List<ExpensesResponse>>(mappedList);
     }
 }

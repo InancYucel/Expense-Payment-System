@@ -7,9 +7,15 @@ namespace Business.Cqrs;
 public class ExpensesCqrs
 {
     public record GetAllExpensesQuery() : IRequest<ApiResponse<List<ExpensesResponse>>>;
-    public record GetExpensesByIdQuery(int Id) : IRequest<ApiResponse<ExpensesResponse>>;
-    
+    public record GetExpenseByIdQuery(int Id) : IRequest<ApiResponse<ExpensesResponse>>;
     public record DeleteExpensesCommand(int Id) : IRequest<ApiResponse>;
-    public record UpdateExpensesCommand(int Id,ExpensesRequest Model) : IRequest<ApiResponse>;
-    public record CreateExpensesCommand(ExpensesRequest Model) : IRequest<ApiResponse<ExpensesResponse>>;
+    public record UpdateExpenseCommand(int Id,ExpensesRequest Model) : IRequest<ApiResponse>;
+    public record CreateExpenseCommand(ExpensesRequest Model) : IRequest<ApiResponse<ExpensesResponse>>;
+    
+    public record GetExpenseByStaffIdQuery(int StaffId) : IRequest<ApiResponse<List<ExpensesResponse>>>;
+    public record CreateExpenseWithStaffIdCommand(StaffExpensesRequest Model, int StaffId) : IRequest<ApiResponse<ExpensesResponse>>;
+    public record UpdateExpenseWithStaffIdCommand(int StaffId, int ExpenseId, StaffExpensesRequest Model) : IRequest<ApiResponse>;
+    public record DeleteExpenseWithStaffIdCommand(int StaffId, int ExpenseId) : IRequest<ApiResponse>;
+
+
 }

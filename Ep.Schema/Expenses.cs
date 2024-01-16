@@ -24,3 +24,13 @@ public class ExpensesResponse : BaseResponse
     public string ExpenseRequestStatus { get; set; }
     public bool IsActive { get; set; }
 }
+
+public class StaffExpensesRequest : BaseRequest
+{
+    public string InvoiceReferenceNumber { get; set; }
+    public double InvoiceAmount { get; set; }
+    public DateTime InvoiceDate { get; set; }
+    public string InvoiceDescription { get; set; }
+    public string ExpenseClaimDescription { get; set; }
+    public string ExpenseRequestStatus { get; set; } 
+}

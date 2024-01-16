@@ -33,8 +33,7 @@ public class StaffQueryHandler :
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.GetStaffByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<Staff>()
-            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<Staff>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
