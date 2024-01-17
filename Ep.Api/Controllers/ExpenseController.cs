@@ -2,6 +2,8 @@ using Base.Response;
 using Business.Cqrs;
 using Data.Insert;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Schema;
 
@@ -19,6 +21,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Get()
     {
         var operation = new ExpensesCqrs.GetAllExpensesQuery();
@@ -27,6 +30,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpGet("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<ExpensesResponse>> Get(int id)
     {
         var operation = new ExpensesCqrs.GetExpenseByIdQuery(id);
@@ -35,6 +39,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<ExpensesResponse>> Post([FromBody] ExpensesRequest expense)
     {
         var operation = new ExpensesCqrs.CreateExpenseCommand(expense);
@@ -43,6 +48,7 @@ public class ExpensesController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse> Put(int id, [FromBody] ExpensesRequest expense)
     {
         var operation = new ExpensesCqrs.UpdateExpenseCommand(id, expense);
@@ -51,6 +57,7 @@ public class ExpensesController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse> Delete(int id)
     {
         var operation = new ExpensesCqrs.DeleteExpensesCommand(id);
@@ -59,6 +66,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpGet("GetExpenseWithStaffId/{staffId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<List<ExpensesResponse>>> GetExpenseWithStaffId(int staffId)
     {
         var operation = new ExpensesCqrs.GetExpenseByStaffIdQuery(staffId);
@@ -67,6 +75,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpPost("CreateExpenseWithStaffId{staffId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<ExpensesResponse>> CreateExpenseWithStaffId([FromBody] StaffExpensesRequest expenseBody, int staffId)
     {
         var operation = new ExpensesCqrs.CreateExpenseWithStaffIdCommand(expenseBody, staffId);
@@ -75,6 +84,7 @@ public class ExpensesController : ControllerBase
     }
 
     [HttpPut("UpdateOwnExpenseWithStaffId{staffId:int}, {expenseId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse> UpdateExpenseWithStaffId(int staffId, int expenseId, [FromBody] StaffExpensesRequest expenseBody)
     {
         var operation = new ExpensesCqrs.UpdateExpenseWithStaffIdCommand(staffId, expenseId,expenseBody);
@@ -83,6 +93,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpDelete("DeleteOwnExpenseWithStaffId{staffId:int}, {expenseId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse> DeleteExpenseWithStaffId(int staffId, int expenseId)
     {
         var operation = new ExpensesCqrs.DeleteExpenseWithStaffIdCommand(staffId, expenseId);

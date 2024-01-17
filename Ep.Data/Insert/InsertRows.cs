@@ -15,11 +15,17 @@ public class InsertRows : IInsertRows
 
     public void InitializeDatabase()
     {
+        if (!(_dbContext.ApplicationUsers.Any()))
+        {
+            InsertApplicationUserRows();
+        }
+
         if (!(_dbContext.Staff.Any()))
         {
             InsertStaffRows();
         }
-        if(!(_dbContext.Expenses.Any()))
+
+        if (!(_dbContext.Expenses.Any()))
         {
             InsertExpensesRows();
         }
@@ -39,6 +45,7 @@ public class InsertRows : IInsertRows
                     {
                         _dbContext.Staff.Add(staff);
                     }
+
                 _dbContext.SaveChanges();
             }
         }
@@ -63,6 +70,7 @@ public class InsertRows : IInsertRows
                     {
                         _dbContext.Expenses.Add(expense);
                     }
+
                 _dbContext.SaveChanges();
             }
         }
@@ -72,14 +80,45 @@ public class InsertRows : IInsertRows
             return;
         }
     }
-    
+
+    private void InsertApplicationUserRows()
+    {
+        try
+        {
+            var applicationUserJson = new StreamReader(@"..\Ep.Data\DataToAdd\ApplicationUser.json");
+            using (applicationUserJson)
+            {
+                var json = applicationUserJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<ApplicationUserRoot>(json);
+                if (root != null)
+                    foreach (var applicationUser in root.ApplicationUser)
+                    {
+                        _dbContext.ApplicationUsers.Add(applicationUser);
+                    }
+
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
+
     private class StaffRoot
     {
         public List<Staff> Staff { get; set; }
     }
+
     private class ExpensesRoot
     {
         public List<Expenses> Expenses { get; set; }
+    }
+
+    private class ApplicationUserRoot
+    {
+        public List<ApplicationUser> ApplicationUser { get; set; }
     }
 }
 

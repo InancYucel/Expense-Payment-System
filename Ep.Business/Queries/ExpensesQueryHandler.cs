@@ -4,6 +4,8 @@ using Business.Cqrs;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Schema;
 
@@ -23,6 +25,7 @@ public class ExpensesQueryHandler :
         _mapper = mapper;
     }
     
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.GetAllExpensesQuery request,
         CancellationToken cancellationToken)
     {
@@ -31,6 +34,7 @@ public class ExpensesQueryHandler :
         return new ApiResponse<List<ExpensesResponse>>(mappedList);
     }
     
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.GetExpenseByIdQuery request,
         CancellationToken cancellationToken)
     {
@@ -45,6 +49,7 @@ public class ExpensesQueryHandler :
         return new ApiResponse<ExpensesResponse>(mapped);
     }
     
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.GetExpenseByStaffIdQuery request,CancellationToken cancellationToken)
     {
         var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId).ToListAsync(cancellationToken);

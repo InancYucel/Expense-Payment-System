@@ -4,6 +4,8 @@ using Business.Cqrs;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Schema;
 

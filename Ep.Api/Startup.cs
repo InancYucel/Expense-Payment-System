@@ -1,11 +1,15 @@
 using System.Reflection;
+using System.Text;
 using AutoMapper;
+using Base.Token;
 using Business.Mapper;
 using Business.Queries;
 using Data.DbContext;
 using Data.Insert;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Expense_Payment_System;
 
@@ -32,6 +36,60 @@ public class Startup
         
         services.AddEndpointsApiExplorer(); //  Discovers endpoints
         services.AddSwaggerGen(); //Prepares documentation for Swagger
+
+        //JwtConfig Begin
+        var jwtConfig = _configuration.GetSection("JwtConfig").Get<JwtConfig>();
+        services.Configure<JwtConfig>(_configuration.GetSection("JwtConfig"));
+        
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(x =>
+        {
+            x.RequireHttpsMetadata = true;
+            x.SaveToken = true;
+            x.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtConfig.Issuer,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfig.Secret)),
+                ValidAudience = jwtConfig.Audience,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromMinutes(2)
+            };
+        });
+        //JwtConfig End
+        
+        //Swagger Authorize button enable Begin
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vb Api Management", Version = "v1.0" });
+
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "Vb Management for IT Company",
+                Description = "Enter JWT Bearer token **_only_**",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Reference = new OpenApiReference
+                {
+                    Id = JwtBearerDefaults.AuthenticationScheme,
+                    Type = ReferenceType.SecurityScheme
+                }
+            };
+            c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                { securityScheme, new string[] { } }
+            });
+        });
+        ////Swagger Authorize button enable End
+        
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInsertRows ins)
@@ -44,6 +102,7 @@ public class Startup
             app.UseSwaggerUI();
         }
         app.UseHttpsRedirection();
+        app.UseAuthentication(); //JWT
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(x => { x.MapControllers(); }); 

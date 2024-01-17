@@ -2,6 +2,8 @@ using Base.Response;
 using Business.Cqrs;
 using Data.Insert;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Schema;
 
@@ -19,6 +21,7 @@ public class StaffController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<StaffResponse>>> Get()
     {
         var operation = new StaffCqrs.GetAllStaffQuery();
@@ -27,6 +30,7 @@ public class StaffController : ControllerBase
     }
     
     [HttpGet("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<StaffResponse>> Get(int id)
     {
         var operation = new StaffCqrs.GetStaffByIdQuery(id);
@@ -35,6 +39,7 @@ public class StaffController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<StaffResponse>> Post([FromBody] StaffRequest staffRequest)
     {
         var operation = new StaffCqrs.CreateStaffCommand(staffRequest);
@@ -43,6 +48,7 @@ public class StaffController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse> Put(int id, [FromBody] StaffRequest staffRequest)
     {
         var operation = new StaffCqrs.UpdateStaffCommand(id, staffRequest);
@@ -51,6 +57,7 @@ public class StaffController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse> Delete(int id)
     {
         var operation = new StaffCqrs.DeleteStaffCommand(id);
