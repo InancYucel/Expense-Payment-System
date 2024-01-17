@@ -1,0 +1,31 @@
+{
+  "Account": [
+    {
+      "AccountNumber": 1,
+      "StaffId": 3,
+      "IBAN": "TR330006100519786457841326",
+      "Balance": 1000.0,
+      "CurrencyType": "TRY",
+      "Name": "Koca",
+      "OpenDate": "2005-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 2,
+      "StaffId": 2,
+      "IBAN": "TR650009371937456457849182",
+      "Balance": 100.0,
+      "CurrencyType": "TRY",
+      "Name": "Debreli",
+      "OpenDate": "2015-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 3,
+      "StaffId": 1,
+      "IBAN": "TR110006826223847587849361",
+      "Balance": 500.0,
+      "CurrencyType": "TRY",
+      "Name": "Inanc",
+      "OpenDate": "2023-05-16T05:50:06"
+    }
+  ]
+}

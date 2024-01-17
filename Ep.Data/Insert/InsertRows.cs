@@ -15,7 +15,7 @@ public class InsertRows : IInsertRows
 
     public void InitializeDatabase()
     {
-        if (!(_dbContext.ApplicationUsers.Any()))
+        if (!(_dbContext.ApplicationUsers.Any())) // TODO db açık değilse burada patlıyor 
         {
             InsertApplicationUserRows();
         }
@@ -24,7 +24,11 @@ public class InsertRows : IInsertRows
         {
             InsertStaffRows();
         }
-
+        if (!(_dbContext.Accounts.Any()))
+        {
+            InsertAccountRows();
+        }
+        
         if (!(_dbContext.Expenses.Any()))
         {
             InsertExpensesRows();
@@ -105,20 +109,46 @@ public class InsertRows : IInsertRows
             return;
         }
     }
+    
+    private void InsertAccountRows()
+    {
+        try
+        {
+            var accountJson = new StreamReader(@"..\Ep.Data\DataToAdd\Account.json");
+            using (accountJson)
+            {
+                var json = accountJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<AccountRoot>(json);
+                if (root != null)
+                    foreach (var account in root.Account)
+                    {
+                        _dbContext.Accounts.Add(account);
+                    }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
 
     private class StaffRoot
     {
         public List<Staff> Staff { get; set; }
     }
-
     private class ExpensesRoot
     {
         public List<Expenses> Expenses { get; set; }
     }
-
     private class ApplicationUserRoot
     {
         public List<ApplicationUser> ApplicationUser { get; set; }
+    }
+    private class AccountRoot
+    {
+        public List<Account> Account { get; set; }
     }
 }
 

@@ -13,12 +13,15 @@ public class EpDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Staff> Staff { get; set; }
     public DbSet<Expenses> Expenses { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<Account> Accounts { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new StaffConfiguration());
         modelBuilder.ApplyConfiguration(new ExpensesConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountConfiguration());
+
         base.OnModelCreating(modelBuilder);
     }
 }
