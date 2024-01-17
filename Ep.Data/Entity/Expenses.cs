@@ -17,6 +17,8 @@ public class Expenses : BaseEntity
     public string InvoiceDescription { get; set; }
     public string ExpenseClaimDescription { get; set; }
     public string ExpenseRequestStatus { get; set; }
+    public string ExpensePaymentRefusal { get; set; }
+
     public virtual Staff Staff { get; set; }
 }
 
@@ -31,6 +33,7 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
         builder.Property(x => x.InvoiceDescription).IsRequired(true);
         builder.Property(x => x.ExpenseClaimDescription).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.ExpenseRequestStatus).IsRequired(true).HasMaxLength(50);
+        builder.Property(x => x.ExpensePaymentRefusal).IsRequired(false).HasMaxLength(50);
         
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasIndex(x => x.InvoiceReferenceNumber).IsUnique(true);

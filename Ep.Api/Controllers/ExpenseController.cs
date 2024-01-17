@@ -100,4 +100,22 @@ public class ExpensesController : ControllerBase
         var result = await _mediator.Send(operation);
         return result;
     }
+    
+    [HttpGet("FilterExpenseWithRequestStatus/{staffId:int}, {requestStatus}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> FilterExpenseWithRequestStatus(int staffId, string requestStatus)
+    {
+        var operation = new ExpensesCqrs.FilterExpenseWithRequestStatus(staffId, requestStatus);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
+    
+    [HttpGet("FilterExpenseWithInvoiceAmount/{staffId:int}, {invoiceAmount:double}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> FilterExpenseWithInvoiceAmount(int staffId, double invoiceAmount)
+    {
+        var operation = new ExpensesCqrs.FilterExpenseWithInvoiceAmount(staffId, invoiceAmount);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
 }

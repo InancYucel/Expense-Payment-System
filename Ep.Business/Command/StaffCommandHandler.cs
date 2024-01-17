@@ -51,7 +51,6 @@ public class StaffCommandHandler :
         fromDb.LastName = request.Model.LastName;
         fromDb.Id = request.Model.Id;
         fromDb.IdentityNumber = request.Model.IdentityNumber;
-        fromDb.IBAN = request.Model.IBAN;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();

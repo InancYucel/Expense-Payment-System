@@ -2,25 +2,25 @@
   "ApplicationUser": [
     {
       "UserName": "staff",
-      "Password": "bcc226aa1b2d5c7338a01e5acd241d39",
+      "Password": "3dda245c080c0c939b49940899d83ce9",
       "FirstName": "Inanc",
       "LastName": "Yucel",
       "Email": "inancyucel@gmail.com",
       "Role": "staff",
-      "PasswordRetryCount": 0,
       "LastActivityDate": "2015-05-16T05:50:06",
-      "Status": 0
+      "PasswordRetryCount": "0",
+      "Status": "0"
     },
     {
       "UserName": "admin",
-      "Password": "637e7a0fb8c72955ea45cb8b57352e67",
+      "Password": "2c4ee59ab102b4044ce15d7bed0717bf",
       "FirstName": "Mustafa",
       "LastName": "Kemal",
       "Email": "bandirma@gmail.com",
       "Role": "admin",
-      "PasswordRetryCount": 0,
       "LastActivityDate": "2015-05-16T05:50:06",
-      "Status": 0
+      "PasswordRetryCount": "0",
+      "Status": "0"
     }
   ]
 }

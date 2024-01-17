@@ -33,4 +33,5 @@ public class StaffExpensesRequest : BaseRequest
     public string InvoiceDescription { get; set; }
     public string ExpenseClaimDescription { get; set; }
     public string ExpenseRequestStatus { get; set; } 
+    public string ExpensePaymentRefusal { get; set; }
 }

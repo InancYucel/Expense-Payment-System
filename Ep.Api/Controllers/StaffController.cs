@@ -1,6 +1,5 @@
 using Base.Response;
 using Business.Cqrs;
-using Data.Insert;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

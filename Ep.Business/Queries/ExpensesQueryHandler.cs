@@ -14,7 +14,10 @@ namespace Business.Queries;
 public class ExpensesQueryHandler : 
     IRequestHandler<ExpensesCqrs.GetAllExpensesQuery, ApiResponse<List<ExpensesResponse>>>,
     IRequestHandler<ExpensesCqrs.GetExpenseByIdQuery, ApiResponse<ExpensesResponse>>,
-    IRequestHandler<ExpensesCqrs.GetExpenseByStaffIdQuery, ApiResponse<List<ExpensesResponse>>>
+    IRequestHandler<ExpensesCqrs.GetExpenseByStaffIdQuery, ApiResponse<List<ExpensesResponse>>>,
+    IRequestHandler<ExpensesCqrs.FilterExpenseWithRequestStatus, ApiResponse<List<ExpensesResponse>>>,
+    IRequestHandler<ExpensesCqrs.FilterExpenseWithInvoiceAmount, ApiResponse<List<ExpensesResponse>>>
+
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
@@ -60,5 +63,39 @@ public class ExpensesQueryHandler :
         }
         var mappedList = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
         return new ApiResponse<List<ExpensesResponse>>(mappedList);
+    }
+    
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithRequestStatus request, CancellationToken cancellationToken)
+    {
+        var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
+                                                               && string.Equals(x.ExpenseRequestStatus.ToLower(),
+                                                                   request.ExpenseRequestStatus.ToLower(),
+                                                                   StringComparison.Ordinal))
+            .ToListAsync(cancellationToken);
+        
+        if (!list.Any())
+        {
+            return new ApiResponse<List<ExpensesResponse>>("Record not found");
+        }
+        
+        var mapped = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
+        return new ApiResponse<List<ExpensesResponse>>(mapped);
+    }
+    
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithInvoiceAmount request, CancellationToken cancellationToken)
+    {
+        var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
+                                                               && x.InvoiceAmount == request.InvoiceAmount)
+            .ToListAsync(cancellationToken);
+        
+        if (!list.Any())
+        {
+            return new ApiResponse<List<ExpensesResponse>>("Record not found");
+        }
+        
+        var mapped = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
+        return new ApiResponse<List<ExpensesResponse>>(mapped);
     }
 }
