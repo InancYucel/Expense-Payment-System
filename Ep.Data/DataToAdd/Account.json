@@ -4,6 +4,7 @@
       "AccountNumber": 1,
       "StaffId": 3,
       "IBAN": "TR330006100519786457841326",
+      "Bank": "İş Bankası",
       "Balance": 1000.0,
       "CurrencyType": "TRY",
       "Name": "Koca",
@@ -13,6 +14,7 @@
       "AccountNumber": 2,
       "StaffId": 2,
       "IBAN": "TR650009371937456457849182",
+      "Bank": "Ak Bank",
       "Balance": 100.0,
       "CurrencyType": "TRY",
       "Name": "Debreli",
@@ -22,6 +24,7 @@
       "AccountNumber": 3,
       "StaffId": 1,
       "IBAN": "TR110006826223847587849361",
+      "Bank": "Ziraat Bankası",
       "Balance": 500.0,
       "CurrencyType": "TRY",
       "Name": "Inanc",
@@ -31,6 +34,7 @@
       "AccountNumber": 4,
       "StaffId": 3,
       "IBAN": "GB33BUKB20201555555555",
+      "Bank": "HSBC",
       "Balance": 350.0,
       "CurrencyType": "USD",
       "Name": "Koca",
@@ -40,6 +44,7 @@
       "AccountNumber": 5,
       "StaffId": 2,
       "IBAN": "CH5604835012345678009",
+      "Bank": "Union Bank of Switzerland",
       "Balance": 10000.0,
       "CurrencyType": "EUR",
       "Name": "Debreli",
@@ -49,10 +54,41 @@
       "AccountNumber": 6,
       "StaffId": 1,
       "IBAN": "IS750001121234563108962099",
+      "Bank": "Central Bank Of Iceland",
       "Balance": 50.0,
       "CurrencyType": "USD",
       "Name": "Inanc",
       "OpenDate": "2021-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 7,
+      "StaffId": 4,
+      "IBAN": "TR430001183920543108962099",
+      "Bank": "Ak Bank",
+      "Balance": 50000000.0,
+      "CurrencyType": "USD",
+      "Name": "A.Ş.K Limited Döviz 1",
+      "OpenDate": "2023-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 8,
+      "StaffId": 4,
+      "IBAN": "TR420007340294720194738274",
+      "Bank": "Ak Bank",
+      "Balance": 4000000.0,
+      "CurrencyType": "EUR",
+      "Name": "A.Ş.K Limited Döviz 2",
+      "OpenDate": "2023-04-16T05:20:54"
+    },
+    {
+      "AccountNumber": 9,
+      "StaffId": 4,
+      "IBAN": "TR120009381736238495847343",
+      "Bank": "Ak Bank",
+      "Balance": 99999999.0,
+      "CurrencyType": "TRY",
+      "Name": "A.Ş.K Limited TÜRK Lirası",
+      "OpenDate": "2024-01-16T02:10:32"
     }
   ]
 }

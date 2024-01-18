@@ -1,0 +1,18 @@
+{
+  "FastTransaction": [
+    {
+      "AccountId": "3",
+      "ExpensePaymentOrderId": "2",
+      "ReferenceNumber": "Admin",
+      "TransactionDate": "2023-05-16T05:50:06",
+      "Amount": 300,
+      "Description": "A101 harca harca bitmez",
+      "SenderBank": "Ak Bank",
+      "SenderIban": "TR120009381736238495847343",
+      "SenderName": "A.Ş.K Limited TÜRK Lirası",
+      "ReceiverBank": "Ak Bank",
+      "ReceiverIban": "TR650009371937456457849182",
+      "ReceiverName": "Debreli"
+    }
+  ]
+}

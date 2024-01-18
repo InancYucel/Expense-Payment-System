@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Base.Entity;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +32,6 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
         builder.Property(x => x.StaffId).IsRequired(true).ValueGeneratedNever();
         builder.Property(x => x.InvoiceReferenceNumber).IsRequired(true);
         builder.Property(x => x.InvoiceAmount).IsRequired(true).HasMaxLength(11);
-        builder.Property(x => x.InvoiceAmount).IsRequired(true).HasMaxLength(3);
         builder.Property(x => x.InvoiceCategory).IsRequired(true).HasMaxLength(15);
         builder.Property(x => x.PaymentInstrument).IsRequired(true).HasMaxLength(15);
         builder.Property(x => x.PaymentLocation).IsRequired(true).HasMaxLength(50);

@@ -1,0 +1,34 @@
+{
+  "SwiftTransaction": [
+    {
+      "AccountId": "6",
+      "ExpensePaymentOrderId": "1",
+      "ReferenceNumber": "K002830173947123",
+      "TransactionDate": "2023-05-16T05:50:06",
+      "Amount": 250,
+      "CurrencyType": "USD",
+      "Description": "A Lannister always pays his debts",
+      "SenderBank": "Ak Bank",
+      "SenderIban": "TR430001183920543108962099",
+      "SenderName": "A.Ş.K Limited Döviz 1",
+      "ReceiverBank": "Central Bank Of Iceland",
+      "ReceiverIban": "IS750001121234563108962099",
+      "ReceiverName": "Inanc"
+    },
+    {
+      "AccountId": "4",
+      "ExpensePaymentOrderId": "3",
+      "ReferenceNumber": "Admin",
+      "TransactionDate": "2023-05-16T05:50:06",
+      "Amount": 100,
+      "CurrencyType": "EUR",
+      "Description": "Borç yiğidin kamçısıdır yiğenim",
+      "SenderBank": "Ak Bank",
+      "SenderIban": "TR420007340294720194738274",
+      "SenderName": "A.Ş.K Limited Döviz 2",
+      "ReceiverBank": "HSBC",
+      "ReceiverIban": "GB33BUKB20201555555555",
+      "ReceiverName": "Koca"
+    }
+  ]
+}

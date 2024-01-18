@@ -33,6 +33,19 @@ public class InsertRows : IInsertRows
         {
             InsertExpensesRows();
         }
+        if (!(_dbContext.ExpensePaymentOrders.Any()))
+        {
+            InsertExpensePaymentOrderRows();
+        }
+        if (!(_dbContext.FastTransactions.Any()))
+        {
+            InsertFastTransactionRows();
+        }
+        if (!(_dbContext.SwiftTransactions.Any()))
+        {
+            InsertSwiftTransactionRows();
+        }
+        
     }
 
     private void InsertStaffRows()
@@ -133,6 +146,78 @@ public class InsertRows : IInsertRows
             return;
         }
     }
+    
+    private void InsertExpensePaymentOrderRows()
+    {
+        try
+        {
+            var expensePaymentOrderJson = new StreamReader(@"..\Ep.Data\DataToAdd\ExpensePaymentOrder.json");
+            using (expensePaymentOrderJson)
+            {
+                var json = expensePaymentOrderJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<ExpensePaymentOrderRoot>(json);
+                if (root != null)
+                    foreach (var expensePaymentOrder in root.ExpensePaymentOrder)
+                    {
+                        _dbContext.ExpensePaymentOrders.Add(expensePaymentOrder);
+                    }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
+    
+    private void InsertFastTransactionRows()
+    {
+        try
+        {
+            var fastTransactionJson = new StreamReader(@"..\Ep.Data\DataToAdd\FastTransaction.json");
+            using (fastTransactionJson)
+            {
+                var json = fastTransactionJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<FastTransactionRoot>(json);
+                if (root != null)
+                    foreach (var fastTransaction in root.FastTransaction)
+                    {
+                        _dbContext.FastTransactions.Add(fastTransaction);
+                    }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
+    
+    private void InsertSwiftTransactionRows()
+    {
+        try
+        {
+            var swiftTransactionJson = new StreamReader(@"..\Ep.Data\DataToAdd\SwiftTransaction.json");
+            using (swiftTransactionJson)
+            {
+                var json = swiftTransactionJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<SwiftTransactionRoot>(json);
+                if (root != null)
+                    foreach (var swiftTransaction in root.SwiftTransaction)
+                    {
+                        _dbContext.SwiftTransactions.Add(swiftTransaction);
+                    }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
 
     private class StaffRoot
     {
@@ -149,6 +234,18 @@ public class InsertRows : IInsertRows
     private class AccountRoot
     {
         public List<Account> Account { get; set; }
+    }
+    private class ExpensePaymentOrderRoot
+    {
+        public List<ExpensePaymentOrder> ExpensePaymentOrder { get; set; }
+    }
+    private class FastTransactionRoot
+    {
+        public List<FastTransaction> FastTransaction { get; set; }
+    }
+    private class SwiftTransactionRoot
+    {
+        public List<SwiftTransaction> SwiftTransaction { get; set; }
     }
 }
 

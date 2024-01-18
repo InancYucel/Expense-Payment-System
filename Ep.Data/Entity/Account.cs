@@ -12,6 +12,8 @@ public class Account : BaseEntity
     public int AccountNumber { get; set; }
     public int StaffId { get; set; }
     public string IBAN { get; set; }
+    public string Bank { get; set; }
+
     public decimal Balance { get; set; }
     public string CurrencyType { get; set; }
     public string Name { get; set; }
@@ -42,6 +44,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(z => z.StaffId).IsRequired(true);
         builder.Property(z => z.AccountNumber).IsRequired(true);
         builder.Property(z => z.IBAN).IsRequired(true).HasMaxLength(34);
+        builder.Property(z => z.Bank).IsRequired(true).HasMaxLength(34);
         builder.Property(z => z.Balance).IsRequired(true).HasPrecision(18, 4);
         builder.Property(z => z.CurrencyType).IsRequired(true).HasMaxLength(100);
         builder.Property(z => z.Name).IsRequired(false).HasMaxLength(100);

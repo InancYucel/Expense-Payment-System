@@ -17,15 +17,12 @@ public class FastTransaction : BaseEntityWithId
     [Precision(18, 4)]
     public decimal Amount { get; set; }
     public string Description { get; set; }
-    public string SenderAccount { get; set; }
     public string SenderBank { get; set; }
     public string SenderIban { get; set; }
     public string SenderName { get; set; }
-    public string ReceiverAccount { get; set; }
     public string ReceiverBank { get; set; }
     public string ReceiverIban { get; set; }
     public string ReceiverName { get; set; }
-    
     public virtual ExpensePaymentOrder ExpensePaymentOrder { get; set; }
 }
 
@@ -50,18 +47,16 @@ public class FastTransactionConfiguration : IEntityTypeConfiguration<FastTransac
         builder.Property(z => z.Amount).IsRequired(true).HasColumnType("decimal(18,4)");
         builder.Property(z => z.Description).IsRequired(false).HasMaxLength(300);
         builder.Property(z => z.ReferenceNumber).IsRequired(true).HasMaxLength(50);
-        builder.Property(z => z.SenderAccount).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.SenderIban).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.SenderBank).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.SenderName).IsRequired(true).HasMaxLength(50);
-        builder.Property(z => z.SenderAccount).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.ReceiverIban).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.ReceiverBank).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.ReceiverName).IsRequired(true).HasMaxLength(50);
-        builder.Property(z => z.ReceiverAccount).IsRequired(true).HasMaxLength(50);
 
         //Indexing so that results come quickly
         builder.HasIndex(z => z.ReferenceNumber);
         builder.HasIndex(x => x.Id).IsUnique(true);
+        builder.HasKey(x => x.Id);
     }
 }

@@ -14,7 +14,6 @@ public class FastTransactionRequest : BaseRequest
     public string SenderBank { get; set; }
     public string SenderIban { get; set; }
     public string SenderName { get; set; }
-    public string ReceiverAccount { get; set; }
     public string ReceiverBank { get; set; }
     public string ReceiverIban { get; set; }
     public string ReceiverName { get; set; }
@@ -32,7 +31,6 @@ public class FastTransactionResponse : BaseResponse
     public string SenderBank { get; set; }
     public string SenderIban { get; set; }
     public string SenderName { get; set; }
-    public string ReceiverAccount { get; set; }
     public string ReceiverBank { get; set; }
     public string ReceiverIban { get; set; }
     public string ReceiverName { get; set; }
