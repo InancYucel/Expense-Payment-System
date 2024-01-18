@@ -14,6 +14,8 @@ public class EpDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Expenses> Expenses { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<ExpensePaymentOrder> ExpensePaymentOrders { get; set; }
+
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,6 +23,7 @@ public class EpDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new ExpensesConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
+        modelBuilder.ApplyConfiguration(new ExpensePaymentOrderConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
