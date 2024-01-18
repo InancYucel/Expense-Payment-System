@@ -64,7 +64,7 @@
       "StaffId": "3",
       "InvoiceReferenceNumber": "P038103729361435",
       "InvoiceAmount": "100",
-      "InvoiceCurrencyType": "EUR",
+      "InvoiceCurrencyType": "USD",
       "InvoiceCategory": "Stationery",
       "PaymentInstrument": "Cash",
       "PaymentLocation": "ABD California",

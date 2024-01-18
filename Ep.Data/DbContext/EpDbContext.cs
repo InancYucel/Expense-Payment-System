@@ -15,7 +15,8 @@ public class EpDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<ExpensePaymentOrder> ExpensePaymentOrders { get; set; }
-
+    public DbSet<FastTransaction> FastTransactions { get; set; }
+    public DbSet<SwiftTransaction> SwiftTransactions { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +25,8 @@ public class EpDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new ExpensePaymentOrderConfiguration());
+        modelBuilder.ApplyConfiguration(new FastTransactionConfiguration());
+        modelBuilder.ApplyConfiguration(new SwiftTransactionConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

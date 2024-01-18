@@ -14,6 +14,7 @@ public class Staff : BaseEntity
     public string LastName { get; set; }
     public DateTime LastActivityDate { get; set; }
     public virtual List<Expenses> Expenses { get; set; }
+    public virtual List<Account> Account { get; set; }
 }
 
 public class StaffConfiguration : IEntityTypeConfiguration<Staff>
@@ -31,5 +32,6 @@ public class StaffConfiguration : IEntityTypeConfiguration<Staff>
         builder.HasKey(x => x.Id);
         
         builder.HasMany(x => x.Expenses).WithOne(x => x.Staff).HasForeignKey(x => x.StaffId).IsRequired(true);
+        builder.HasMany(x => x.Account).WithOne(x => x.Staff).HasForeignKey(x => x.StaffId).IsRequired(true);
     }
 }

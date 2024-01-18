@@ -26,6 +26,33 @@
       "CurrencyType": "TRY",
       "Name": "Inanc",
       "OpenDate": "2023-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 4,
+      "StaffId": 3,
+      "IBAN": "GB33BUKB20201555555555",
+      "Balance": 350.0,
+      "CurrencyType": "USD",
+      "Name": "Koca",
+      "OpenDate": "2010-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 5,
+      "StaffId": 2,
+      "IBAN": "CH5604835012345678009",
+      "Balance": 10000.0,
+      "CurrencyType": "EUR",
+      "Name": "Debreli",
+      "OpenDate": "2015-05-16T05:50:06"
+    },
+    {
+      "AccountNumber": 6,
+      "StaffId": 1,
+      "IBAN": "IS750001121234563108962099",
+      "Balance": 50.0,
+      "CurrencyType": "USD",
+      "Name": "Inanc",
+      "OpenDate": "2021-05-16T05:50:06"
     }
   ]
 }

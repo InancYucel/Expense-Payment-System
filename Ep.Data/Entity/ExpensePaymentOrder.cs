@@ -9,15 +9,15 @@ namespace Data.Entity;
 public class ExpensePaymentOrder : BaseEntity
 {
     public int Id { get; set; }
-    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int ExpenseId { get; set; }
     public DateTime PaymentConfirmationDate { get; set; }
     public string AccountConfirmingOrder { get; set; } 
     public string PaymentIban { get; set; }
     public bool IsPaymentCompleted { get; set; }
     public DateTime PaymentCompletedDate { get; set; }
-    public int TransactionId { get; set; }
-    public virtual Expenses Expense { get; set; }
+    public virtual Expenses Expenses { get; set; }
+    public virtual FastTransaction FastTransaction { get; set; }
+    public virtual SwiftTransaction SwiftTransaction { get; set; }
 }
 
 public class ExpensePaymentOrderConfiguration : IEntityTypeConfiguration<ExpensePaymentOrder>
@@ -30,11 +30,13 @@ public class ExpensePaymentOrderConfiguration : IEntityTypeConfiguration<Expense
         builder.Property(x => x.PaymentIban).IsRequired(true).HasMaxLength(34);
         builder.Property(x => x.IsPaymentCompleted).IsRequired(true).HasMaxLength(10);
         builder.Property(x => x.PaymentConfirmationDate).IsRequired(true);
-        builder.Property(x => x.TransactionId).IsRequired(true);
 
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasIndex(x => x.ExpenseId).IsUnique(true);
 
         builder.HasKey(x => x.Id);
+        
+        builder.HasOne(x => x.FastTransaction).WithOne(x => x.ExpensePaymentOrder).HasForeignKey<FastTransaction>(x => x.ExpensePaymentOrderId);
+        builder.HasOne(x => x.SwiftTransaction).WithOne(x => x.ExpensePaymentOrder).HasForeignKey<SwiftTransaction>(x => x.ExpensePaymentOrderId);
     }
 }

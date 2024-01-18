@@ -48,7 +48,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(z => z.OpenDate).IsRequired(true);
 
         builder.HasIndex(x => x.Id).IsUnique(true);
-        builder.HasIndex(z => z.StaffId);
         builder.HasIndex(z => z.AccountNumber).IsUnique(true);
         builder.HasKey(z => z.Id);
     }

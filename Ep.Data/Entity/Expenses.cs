@@ -10,7 +10,6 @@ namespace Data.Entity;
 public class Expenses : BaseEntity
 {
     public int Id { get; set; }
-    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int StaffId { get; set; }
     public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
@@ -23,6 +22,7 @@ public class Expenses : BaseEntity
     public string ExpenseRequestStatus { get; set; }
     public string ExpensePaymentRefusal { get; set; }
     public virtual Staff Staff { get; set; }
+    public virtual ExpensePaymentOrder ExpensePaymentOrder { get; set; }
 }
 
 public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
@@ -45,5 +45,6 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
         builder.HasIndex(x => x.InvoiceReferenceNumber).IsUnique(true);
 
         builder.HasKey(x => x.Id);
+        builder.HasOne(x => x.ExpensePaymentOrder).WithOne(x => x.Expenses).HasForeignKey<ExpensePaymentOrder>(x => x.ExpenseId);
     }
 }
