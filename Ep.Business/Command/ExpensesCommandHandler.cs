@@ -52,7 +52,7 @@ public class ExpensesCommandHandler :
         
         fromDb.InvoiceReferenceNumber = request.Model.InvoiceReferenceNumber;
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
-        fromDb.InvoiceDescription = request.Model.InvoiceDescription;
+        fromDb.InvoiceCategory = request.Model.InvoiceCategory;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         
@@ -98,7 +98,7 @@ public class ExpensesCommandHandler :
         
         fromDb.InvoiceReferenceNumber = request.Model.InvoiceReferenceNumber;
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
-        fromDb.InvoiceDescription = request.Model.InvoiceDescription;
+        fromDb.InvoiceCategory = request.Model.InvoiceCategory;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -108,7 +108,6 @@ public class ExpensesCommandHandler :
     public async Task<ApiResponse> Handle(ExpensesCqrs.DeleteExpenseWithStaffIdCommand request, CancellationToken cancellationToken)
     {
         var fromDb = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.Id == request.ExpenseId).FirstOrDefaultAsync(cancellationToken);
-        
         if (fromDb == null)
         {
             return new ApiResponse("Record not found");
@@ -130,7 +129,12 @@ public class ExpensesCommandHandler :
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;
         
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        var saveResult = await _dbContext.SaveChangesAsync(cancellationToken);
+
+        if (saveResult > 0)
+        {
+            
+        }
         return new ApiResponse();
     }
 }
