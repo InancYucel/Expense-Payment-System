@@ -22,6 +22,7 @@ public class ExpensesResponse : BaseResponse
     public string InvoiceDescription { get; set; }
     public string ExpenseClaimDescription { get; set; }
     public string ExpenseRequestStatus { get; set; }
+    public string ExpensePaymentRefusal { get; set; }
     public bool IsActive { get; set; }
 }
 

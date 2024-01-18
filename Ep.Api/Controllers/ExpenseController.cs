@@ -118,4 +118,13 @@ public class ExpensesController : ControllerBase
         var result = await _mediator.Send(operation);
         return result;
     }
+    
+    [HttpGet("GetRejectedRefundRequests/{staffId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> GetRejectedRefundRequests(int staffId)
+    {
+        var operation = new ExpensesCqrs.GetRejectedRefundRequests(staffId);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
 }

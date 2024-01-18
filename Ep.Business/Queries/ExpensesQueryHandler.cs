@@ -16,7 +16,8 @@ public class ExpensesQueryHandler :
     IRequestHandler<ExpensesCqrs.GetExpenseByIdQuery, ApiResponse<ExpensesResponse>>,
     IRequestHandler<ExpensesCqrs.GetExpenseByStaffIdQuery, ApiResponse<List<ExpensesResponse>>>,
     IRequestHandler<ExpensesCqrs.FilterExpenseWithRequestStatus, ApiResponse<List<ExpensesResponse>>>,
-    IRequestHandler<ExpensesCqrs.FilterExpenseWithInvoiceAmount, ApiResponse<List<ExpensesResponse>>>
+    IRequestHandler<ExpensesCqrs.FilterExpenseWithInvoiceAmount, ApiResponse<List<ExpensesResponse>>>,
+    IRequestHandler<ExpensesCqrs.GetRejectedRefundRequests, ApiResponse<List<ExpensesResponse>>>
 
 {
     private readonly EpDbContext _dbContext;
@@ -97,5 +98,18 @@ public class ExpensesQueryHandler :
         
         var mapped = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
         return new ApiResponse<List<ExpensesResponse>>(mapped);
+    }
+    
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
+    public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.GetRejectedRefundRequests request,CancellationToken cancellationToken)
+    {
+        var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.ExpenseRequestStatus == "denied").ToListAsync(cancellationToken);
+
+        if (!list.Any())
+        {
+            return new ApiResponse<List<ExpensesResponse>>("Record not found");
+        }
+        var mappedList = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
+        return new ApiResponse<List<ExpensesResponse>>(mappedList);
     }
 }
