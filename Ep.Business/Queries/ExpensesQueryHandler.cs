@@ -112,4 +112,6 @@ public class ExpensesQueryHandler :
         var mappedList = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
         return new ApiResponse<List<ExpensesResponse>>(mappedList);
     }
+    
+    
 }

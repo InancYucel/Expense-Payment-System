@@ -127,4 +127,13 @@ public class ExpensesController : ControllerBase
         var result = await _mediator.Send(operation);
         return result;
     }
+    
+    [HttpPut("ReplyToApplication/{expenseId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    public async Task<ApiResponse> ReplyToApplication([FromBody] ReplyExpensesRequest expenseBody, int expenseId)
+    {
+        var operation = new ExpensesCqrs.ReplyToApplication(expenseId, expenseBody);
+        var result = await _mediator.Send(operation);
+        return result;
+    }
 }

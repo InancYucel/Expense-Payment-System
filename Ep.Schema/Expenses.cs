@@ -36,3 +36,9 @@ public class StaffExpensesRequest : BaseRequest
     public string ExpenseRequestStatus { get; set; } 
     public string ExpensePaymentRefusal { get; set; }
 }
+
+public class ReplyExpensesRequest : BaseRequest
+{
+    public string ExpenseRequestStatus { get; set; } 
+    public string ExpensePaymentRefusal { get; set; }
+}

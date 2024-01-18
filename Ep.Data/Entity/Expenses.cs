@@ -18,7 +18,6 @@ public class Expenses : BaseEntity
     public string ExpenseClaimDescription { get; set; }
     public string ExpenseRequestStatus { get; set; }
     public string ExpensePaymentRefusal { get; set; }
-
     public virtual Staff Staff { get; set; }
 }
 

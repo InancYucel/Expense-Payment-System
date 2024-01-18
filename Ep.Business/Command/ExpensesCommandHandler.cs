@@ -15,7 +15,8 @@ public class ExpensesCommandHandler :
     IRequestHandler<ExpensesCqrs.DeleteExpensesCommand,ApiResponse>,
     IRequestHandler<ExpensesCqrs.CreateExpenseWithStaffIdCommand,ApiResponse<ExpensesResponse>>,
     IRequestHandler<ExpensesCqrs.UpdateExpenseWithStaffIdCommand,ApiResponse>,
-    IRequestHandler<ExpensesCqrs.DeleteExpenseWithStaffIdCommand,ApiResponse>
+    IRequestHandler<ExpensesCqrs.DeleteExpenseWithStaffIdCommand,ApiResponse>,
+    IRequestHandler<ExpensesCqrs.ReplyToApplication,ApiResponse>
     
 {
     private readonly EpDbContext _dbContext;
@@ -114,6 +115,21 @@ public class ExpensesCommandHandler :
         }
         
         fromDb.IsActive = false;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return new ApiResponse();
+    }
+    
+    public async Task<ApiResponse> Handle(ExpensesCqrs.ReplyToApplication request, CancellationToken cancellationToken)
+    {
+        var fromDb = await _dbContext.Set<Expenses>().Where(x => x.Id == request.ExpenseId).FirstOrDefaultAsync(cancellationToken);
+        if (fromDb == null)
+        {
+            return new ApiResponse("Record not found");
+        }
+        
+        fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
+        fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;
+        
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
     }
