@@ -38,7 +38,8 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
         builder.Property(x => x.ExpenseClaimDescription).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.ExpenseRequestStatus).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.ExpensePaymentRefusal).IsRequired(false).HasMaxLength(50);
-        
+        builder.Property(z => z.IsActive).IsRequired(true).HasDefaultValue(true);
+
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasIndex(x => x.InvoiceReferenceNumber).IsUnique(true);
 

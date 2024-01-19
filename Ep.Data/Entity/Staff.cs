@@ -26,7 +26,8 @@ public class StaffConfiguration : IEntityTypeConfiguration<Staff>
         builder.Property(x => x.FirstName).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.LastName).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.LastActivityDate).IsRequired(true);
-        
+        builder.Property(z => z.IsActive).IsRequired(true).HasDefaultValue(true);
+
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasIndex(x => x.IdentityNumber).IsUnique(true);
         builder.HasKey(x => x.Id);

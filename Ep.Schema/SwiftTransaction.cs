@@ -35,4 +35,5 @@ public class SwiftTransactionResponse : BaseResponse
     public string ReceiverBank { get; set; }
     public string ReceiverIban { get; set; }
     public string ReceiverName { get; set; }
+    public bool IsActive { get; set; }
 }

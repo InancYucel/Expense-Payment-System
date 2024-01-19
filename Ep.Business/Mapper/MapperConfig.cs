@@ -17,5 +17,8 @@ public class MapperConfig : Profile
         
         CreateMap<AccountRequest, Account>();
         CreateMap<Account, AccountResponse>();
+        
+        CreateMap<ExpensePaymentOrderRequest, ExpensePaymentOrder>();
+        CreateMap<ExpensePaymentOrder, ExpensePaymentOrderResponse>();
     }
 }

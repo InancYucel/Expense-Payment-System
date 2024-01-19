@@ -22,4 +22,5 @@ public class ApplicationUserResponse : BaseResponse
     public DateTime LastActivityDate { get; set; }
     public int PasswordRetryCount { get; set; }
     public int Status { get; set; }
+    public bool IsActive { get; set; }
 }

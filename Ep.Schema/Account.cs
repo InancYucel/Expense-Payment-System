@@ -24,4 +24,5 @@ public class AccountResponse : BaseResponse
     public string CurrencyType { get; set; }
     public string Name { get; set; }
     public DateTime OpenDate { get; set; }
+    public bool IsActive { get; set; }
 }
