@@ -14,7 +14,7 @@ public class SwiftTransaction : BaseEntityWithId
     public DateTime TransactionDate { get; set; }
     
     [Precision(18, 4)]
-    public decimal Amount { get; set; }
+    public double Amount { get; set; }
     public string CurrencyType { get; set; }
     public string Description { get; set; }
     public string SenderBank { get; set; }

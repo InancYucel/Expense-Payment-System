@@ -5,9 +5,9 @@ namespace Schema;
 public class FastTransactionRequest : BaseRequest
 {
     public int AccountId { get; set; }
+    public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
     public DateTime TransactionDate { get; set; }
-    
     public decimal Amount { get; set; }
     public string Description { get; set; }
     public string SenderAccount { get; set; }
@@ -22,9 +22,9 @@ public class FastTransactionRequest : BaseRequest
 public class FastTransactionResponse : BaseResponse
 {
     public int AccountId { get; set; }
+    public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
     public DateTime TransactionDate { get; set; }
-    
     public decimal Amount { get; set; }
     public string Description { get; set; }
     public string SenderAccount { get; set; }

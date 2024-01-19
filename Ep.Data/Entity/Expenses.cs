@@ -12,7 +12,6 @@ public class Expenses : BaseEntity
     public int StaffId { get; set; }
     public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
-    
     public string InvoiceCurrencyType { get; set; }
     public string InvoiceCategory { get; set; }
     public string PaymentInstrument { get; set; }

@@ -33,8 +33,8 @@ public class FastTransactionQueryHandler :
     public async Task<ApiResponse<FastTransactionResponse>> Handle(FastTransactionCqrs.GetFastTransactionByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<FastTransaction>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-
+        var entity =  await _dbContext.Set<FastTransaction>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        
         if (entity == null)
         {
             return new ApiResponse<FastTransactionResponse>("Record not found");

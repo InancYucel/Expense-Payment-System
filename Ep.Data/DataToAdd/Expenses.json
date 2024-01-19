@@ -9,7 +9,7 @@
       "PaymentInstrument": "Credit Card",
       "PaymentLocation": "Bolu Mengen",
       "ExpenseClaimDescription": "Gasoline expenditure",
-      "ExpenseRequestStatus": "Waiting",
+      "ExpenseRequestStatus": "waiting",
       "IsActive": 1
     },
     {
@@ -21,7 +21,7 @@
       "PaymentInstrument": "Cash",
       "PaymentLocation": "Ankara Bilkent",
       "ExpenseClaimDescription": "Lunch",
-      "ExpenseRequestStatus": "Waiting",
+      "ExpenseRequestStatus": "waiting",
       "IsActive": 1
     },
     {
@@ -33,7 +33,7 @@
       "PaymentInstrument": "FAST",
       "PaymentLocation": "İstanbul Beşiktaş",
       "ExpenseClaimDescription": "Traffic Accident",
-      "ExpenseRequestStatus": "Waiting",
+      "ExpenseRequestStatus": "waiting",
       "IsActive": 1
     },
     {
@@ -45,7 +45,7 @@
       "PaymentInstrument": "Credit Card",
       "PaymentLocation": "Meksika Meksika",
       "ExpenseClaimDescription": "Dress a wound",
-      "ExpenseRequestStatus": "Approved",
+      "ExpenseRequestStatus": "approved",
       "IsActive": 1
     },
     {
@@ -57,7 +57,7 @@
       "PaymentInstrument": "Cash",
       "PaymentLocation": "Nevşehir Göreme",
       "ExpenseClaimDescription": "Bus ticket",
-      "ExpenseRequestStatus": "Approved",
+      "ExpenseRequestStatus": "approved",
       "IsActive": 1
     },
     {
@@ -69,7 +69,7 @@
       "PaymentInstrument": "Cash",
       "PaymentLocation": "ABD California",
       "ExpenseClaimDescription": "A4 papers are too expensive",
-      "ExpenseRequestStatus": "Approved",
+      "ExpenseRequestStatus": "approved",
       "IsActive": 1
     },
     {
@@ -81,7 +81,7 @@
       "PaymentInstrument": "SWIFT",
       "PaymentLocation": "Chile",
       "ExpenseClaimDescription": "Please I need",
-      "ExpenseRequestStatus": "Denied",
+      "ExpenseRequestStatus": "denied",
       "IsActive": 1
     },
     {
@@ -93,7 +93,7 @@
       "PaymentInstrument": "Credit Card",
       "PaymentLocation": "Ankara Batıkent",
       "ExpenseClaimDescription": "My new RTX 4090 graphics card is very good",
-      "ExpenseRequestStatus": "Denied",
+      "ExpenseRequestStatus": "denied",
       "IsActive": 1
     },
     {
@@ -105,7 +105,7 @@
       "PaymentInstrument": "Cash",
       "PaymentLocation": "ABD Nebraska",
       "ExpenseClaimDescription": "Optimum Whey Strawberry",
-      "ExpenseRequestStatus": "Denied",
+      "ExpenseRequestStatus": "denied",
       "IsActive": 1
     }
   ]

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.Functional;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -125,7 +126,17 @@ public class ExpensesCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        
+
+        if (!(ExpenseStatusControl(fromDb.ExpenseRequestStatus.ToLower(), request.Model.ExpenseRequestStatus.ToLower())))
+        {
+            return new ApiResponse("Approved expense cannot be changed");
+        }
+
+        if (request.Model.ExpenseRequestStatus.ToLower() == "approved")
+        {
+            var expensePayment = new MakePayment(_dbContext, _mapper);
+            expensePayment.CreateExpensePaymentOrder(request.ExpenseId);
+        }
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;
         
@@ -136,5 +147,18 @@ public class ExpensesCommandHandler :
             
         }
         return new ApiResponse();
+    }
+
+    public bool ExpenseStatusControl(string dbRequestStatus, string modelRequestStatus)
+    {
+        if (dbRequestStatus == "approved")
+        {
+            return false; // You cant change approved expense
+        }
+        else if (dbRequestStatus is "waiting" or "denied")
+        {
+            return true;
+        }
+        return true;
     }
 }

@@ -33,7 +33,7 @@ public class AccountQueryHandler :
     public async Task<ApiResponse<AccountResponse>> Handle(AccountCqrs.GetAccountByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<Account>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<Account>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
