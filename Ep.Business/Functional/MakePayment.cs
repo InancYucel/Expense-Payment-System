@@ -17,7 +17,7 @@ public class MakePayment
         _mapper = mapper;
     }
 
-    public bool CreateExpensePaymentOrder(int expenseId, double modelAmount)
+    public void CreateExpensePaymentOrder(int expenseId, double modelAmount)
     {
         var expense = GetExpenseWithExpenseId(expenseId);
         var account = GetAccountInfos(expense);
@@ -26,11 +26,11 @@ public class MakePayment
         newRow.ExpenseId = expenseId;
         newRow.PaymentConfirmationDate = DateTime.Now;
         newRow.AccountConfirmingOrder = "admin";
-        newRow.PaymentIban = account.IBAN; 
+        newRow.PaymentIban = account.IBAN;
+        newRow.PaymentCategory = expense.InvoiceCategory;
         _dbContext.Add(newRow); 
         _dbContext.SaveChanges();
         CreateTransaction(expense, account, modelAmount);
-        return true;
     }
 
     public Account GetAccountInfos(Expenses expense)
@@ -148,8 +148,8 @@ public class MakePayment
 
     public void MoneyOutAndIn(Account receiverAccount, Account senderAccount, double amount)
     {
-        var recieverAccountEntity = _dbContext.Set<Account>().FirstOrDefault(x => x.Id == receiverAccount.Id);
-        recieverAccountEntity.Balance = recieverAccountEntity.Balance + amount;
+        var receiverAccountEntity = _dbContext.Set<Account>().FirstOrDefault(x => x.Id == receiverAccount.Id);
+        receiverAccountEntity.Balance = receiverAccountEntity.Balance + amount;
         _dbContext.SaveChanges();
 
         var senderAccountEntity = _dbContext.Set<Account>().FirstOrDefault(x => x.Id == senderAccount.Id);

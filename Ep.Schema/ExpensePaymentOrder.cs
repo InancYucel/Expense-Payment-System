@@ -8,6 +8,7 @@ public class ExpensePaymentOrderRequest: BaseRequest
     public DateTime PaymentConfirmationDate { get; set; }
     public string AccountConfirmingOrder { get; set; } 
     public string PaymentIban { get; set; }
+    public string PaymentCategory { get; set; }
     public bool IsPaymentCompleted { get; set; }
     public DateTime PaymentCompletedDate { get; set; }
 }
@@ -19,6 +20,7 @@ public class ExpensePaymentOrderResponse: BaseResponse
     public DateTime PaymentConfirmationDate { get; set; }
     public string AccountConfirmingOrder { get; set; } 
     public string PaymentIban { get; set; }
+    public string PaymentCategory { get; set; }
     public bool IsPaymentCompleted { get; set; }
     public DateTime PaymentCompletedDate { get; set; }
     public bool IsActive { get; set; }

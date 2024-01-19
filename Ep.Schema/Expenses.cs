@@ -51,6 +51,7 @@ public class ReplyExpensesRequest : BaseRequest
     public int StaffId { get; set; }
     public double InvoiceAmount { get; set; }
     public string InvoiceCurrencyType { get; set; }
+    public string ExpenseCategory { get; set; }
     public string ExpenseRequestStatus { get; set; } 
     public string ExpensePaymentRefusal { get; set; }
 }
