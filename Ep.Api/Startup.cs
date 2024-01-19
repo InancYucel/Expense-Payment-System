@@ -6,6 +6,7 @@ using Business.Mapper;
 using Business.Queries;
 using Data.DbContext;
 using Data.Insert;
+using Expense_Payment_System.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -101,6 +102,10 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseMiddleware<WitcherMiddleware>();
+        app.UseMiddleware<ErrorHandlerMiddleware>();
+
         app.UseHttpsRedirection();
         app.UseAuthentication(); //JWT
         app.UseRouting();

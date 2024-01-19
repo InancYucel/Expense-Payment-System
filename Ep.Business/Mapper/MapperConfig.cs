@@ -26,5 +26,8 @@ public class MapperConfig : Profile
         
         CreateMap<SwiftTransactionRequest, SwiftTransaction>();
         CreateMap<SwiftTransaction, SwiftTransactionResponse>();
+        
+        CreateMap<PaymentCategoriesRequest, PaymentCategories>();
+        CreateMap<PaymentCategories, PaymentCategoriesResponse>();
     }
 }
