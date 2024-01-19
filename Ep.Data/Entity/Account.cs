@@ -14,7 +14,7 @@ public class Account : BaseEntity
     public string IBAN { get; set; }
     public string Bank { get; set; }
 
-    public decimal Balance { get; set; }
+    public double Balance { get; set; }
     public string CurrencyType { get; set; }
     public string Name { get; set; }
     public DateTime OpenDate { get; set; }

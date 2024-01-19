@@ -135,7 +135,7 @@ public class ExpensesCommandHandler :
         if (request.Model.ExpenseRequestStatus.ToLower() == "approved")
         {
             var expensePayment = new MakePayment(_dbContext, _mapper);
-            expensePayment.CreateExpensePaymentOrder(request.ExpenseId);
+            expensePayment.CreateExpensePaymentOrder(request.ExpenseId, request.Model.InvoiceAmount);
         }
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;

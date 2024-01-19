@@ -4,7 +4,6 @@ namespace Schema;
 
 public class AccountRequest : BaseRequest
 {
-    public int AccountId { get; set; }
     public int StaffId { get; set; }
     public string IBAN { get; set; }
     public string Bank { get; set; }
@@ -15,7 +14,6 @@ public class AccountRequest : BaseRequest
 
 public class AccountResponse : BaseResponse
 {
-    public int AccountId { get; set; }
     public int StaffId { get; set; }
     public int AccountNumber { get; set; }
     public string IBAN { get; set; }

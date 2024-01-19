@@ -17,7 +17,7 @@ public class MakePayment
         _mapper = mapper;
     }
 
-    public bool CreateExpensePaymentOrder(int expenseId)
+    public bool CreateExpensePaymentOrder(int expenseId, double modelAmount)
     {
         var expense = GetExpenseWithExpenseId(expenseId);
         var account = GetAccountInfos(expense);
@@ -29,7 +29,7 @@ public class MakePayment
         newRow.PaymentIban = account.IBAN; 
         _dbContext.Add(newRow); 
         _dbContext.SaveChanges();
-        CreateTransaction(expense, account);
+        CreateTransaction(expense, account, modelAmount);
         return true;
     }
 
@@ -53,65 +53,67 @@ public class MakePayment
         return entity ?? null;
     }
 
-    public void CreateTransaction(Expenses expense, Account account)
+    public void CreateTransaction(Expenses expense, Account account, double modelAmount)
     {
         if (expense.InvoiceCurrencyType == "TRY")
         {
-            CreateFastTransaction(expense, account);
+            CreateFastTransaction(expense, account, modelAmount);
         }
         else
         {
-            CreateSwiftTransaction(expense, account);
+            CreateSwiftTransaction(expense, account, modelAmount);
         }
     }
 
-    public void CreateFastTransaction(Expenses expense, Account account)
+    public void CreateFastTransaction(Expenses expense, Account receiverAccount, double modelAmount)
     {
-        var companyAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
+        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
         var row = new FastTransaction();
-        row.AccountId = account.Id;
+        row.AccountId = receiverAccount.Id;
         row.ExpensePaymentOrderId = 
         row.ExpensePaymentOrderId = GetExpensePaymentOrderIdWithExpenseId(expense.Id);
         row.ReferenceNumber = new Random().Next(1000000, 9999999).ToString(); // TODO unique mi veritabanında daha önce oluşmuş mu diye kontrol edilmesi lazım
         row.TransactionDate = DateTime.Now;
-        row.Amount = expense.InvoiceAmount;
+        row.Amount = modelAmount;
         row.Description = expense.PaymentLocation;
-        row.SenderBank = companyAccount.Bank;
-        row.SenderIban = companyAccount.IBAN;
-        row.SenderName = companyAccount.Name;
-        row.ReceiverBank = account.Bank;
-        row.ReceiverIban = account.IBAN;
-        row.ReceiverName = account.Name;
+        row.SenderBank = senderAccount.Bank;
+        row.SenderIban = senderAccount.IBAN;
+        row.SenderName = senderAccount.Name;
+        row.ReceiverBank = receiverAccount.Bank;
+        row.ReceiverIban = receiverAccount.IBAN;
+        row.ReceiverName = receiverAccount.Name;
         
         _dbContext.Add(row);
         var isSuccess = _dbContext.SaveChanges();
         if (isSuccess > 0)
         {
+            MoneyOutAndIn(receiverAccount, senderAccount, row.Amount);
             UpdateExpensePaymentOrderRowsWithFast(row);
         }
     }
     
-    public void CreateSwiftTransaction(Expenses expense, Account account)
+    public void CreateSwiftTransaction(Expenses expense, Account receiverAccount, double modelAmount)
     {
-        var companyAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
+        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
         var row = new SwiftTransaction();
-        row.AccountId = account.Id;
+        row.AccountId = receiverAccount.Id;
         row.ExpensePaymentOrderId = GetExpensePaymentOrderIdWithExpenseId(expense.Id);
         row.ReferenceNumber = new Random().Next(1000000, 9999999).ToString(); // TODO unique mi veritabanında daha önce oluşmuş mu diye kontrol edilmesi lazım
         row.TransactionDate = DateTime.Now;
-        row.Amount = expense.InvoiceAmount;
+        row.Amount = modelAmount;
         row.CurrencyType = expense.InvoiceCurrencyType;
-        row.Description = companyAccount.Name;
-        row.SenderBank = companyAccount.Bank;
-        row.SenderIban = companyAccount.IBAN;
-        row.ReceiverBank = account.Bank;
-        row.ReceiverIban = account.IBAN;
-        row.ReceiverName = account.Name;
+        row.Description = senderAccount.Name;
+        row.SenderBank = senderAccount.Bank;
+        row.SenderIban = senderAccount.IBAN;
+        row.ReceiverBank = receiverAccount.Bank;
+        row.ReceiverIban = receiverAccount.IBAN;
+        row.ReceiverName = receiverAccount.Name;
         
         _dbContext.Add(row);
         var isSuccess = _dbContext.SaveChanges();
         if (isSuccess > 0)
         {
+            MoneyOutAndIn(receiverAccount, senderAccount, row.Amount);
             UpdateExpensePaymentOrderRowsWithSwift(row);
         }
     }
@@ -141,6 +143,17 @@ public class MakePayment
         var entity = _dbContext.Set<ExpensePaymentOrder>().FirstOrDefault(x => x.Id == swiftTransaction.ExpensePaymentOrderId);
         entity.IsPaymentCompleted = true;
         entity.PaymentCompletedDate = DateTime.Now;
+        _dbContext.SaveChanges();
+    }
+
+    public void MoneyOutAndIn(Account receiverAccount, Account senderAccount, double amount)
+    {
+        var recieverAccountEntity = _dbContext.Set<Account>().FirstOrDefault(x => x.Id == receiverAccount.Id);
+        recieverAccountEntity.Balance = recieverAccountEntity.Balance + amount;
+        _dbContext.SaveChanges();
+
+        var senderAccountEntity = _dbContext.Set<Account>().FirstOrDefault(x => x.Id == senderAccount.Id);
+        senderAccountEntity.Balance = senderAccountEntity.Balance - amount;
         _dbContext.SaveChanges();
     }
 }
