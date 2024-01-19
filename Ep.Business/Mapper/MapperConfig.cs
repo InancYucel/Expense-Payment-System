@@ -20,5 +20,8 @@ public class MapperConfig : Profile
         
         CreateMap<ExpensePaymentOrderRequest, ExpensePaymentOrder>();
         CreateMap<ExpensePaymentOrder, ExpensePaymentOrderResponse>();
+        
+        CreateMap<FastTransactionRequest, FastTransaction>();
+        CreateMap<FastTransaction, FastTransactionResponse>();
     }
 }
