@@ -137,6 +137,7 @@ public class ExpensesCommandHandler :
             var expensePayment = new MakePayment(_dbContext, _mapper);
             expensePayment.CreateExpensePaymentOrder(request.ExpenseId, request.Model.InvoiceAmount);
         }
+        
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;
         

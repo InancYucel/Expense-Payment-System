@@ -1,0 +1,25 @@
+{
+  "PaymentCategories": [
+    {
+      "Category": "Dinner"
+    },
+    {
+      "Category": "Fuel"
+    },
+    {
+      "Category": "Material"
+    },
+    {
+      "Category": "Ticket"
+    },
+    {
+      "Category": "Transportation"
+    },
+    {
+      "Category": "Health"
+    },
+    {
+      "Category": "Repair"
+    }
+  ]
+}

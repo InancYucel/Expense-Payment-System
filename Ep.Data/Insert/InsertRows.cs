@@ -15,37 +15,49 @@ public class InsertRows : IInsertRows
 
     public void InitializeDatabase()
     {
-        if (!(_dbContext.ApplicationUsers.Any())) // TODO db açık değilse burada patlıyor 
+        try
         {
-            InsertApplicationUserRows();
-        }
+            if (!(_dbContext.ApplicationUsers.Any())) 
+            {
+                InsertApplicationUserRows();
+            }
 
-        if (!(_dbContext.Staff.Any()))
-        {
-            InsertStaffRows();
-        }
-        if (!(_dbContext.Accounts.Any()))
-        {
-            InsertAccountRows();
-        }
+            if (!(_dbContext.Staff.Any()))
+            {
+                InsertStaffRows();
+            }
+            if (!(_dbContext.Accounts.Any()))
+            {
+                InsertAccountRows();
+            }
         
-        if (!(_dbContext.Expenses.Any()))
-        {
-            InsertExpensesRows();
+            if (!(_dbContext.Expenses.Any()))
+            {
+                InsertExpensesRows();
+            }
+            if (!(_dbContext.ExpensePaymentOrders.Any()))
+            {
+                InsertExpensePaymentOrderRows();
+            }
+            if (!(_dbContext.FastTransactions.Any()))
+            {
+                InsertFastTransactionRows();
+            }
+            if (!(_dbContext.SwiftTransactions.Any()))
+            {
+                InsertSwiftTransactionRows();
+            }
+            if (!(_dbContext.PaymentCategories.Any()))
+            {
+                InsertPaymentCategoriesRows();
+            }
         }
-        if (!(_dbContext.ExpensePaymentOrders.Any()))
+        catch (Exception e)
         {
-            InsertExpensePaymentOrderRows();
+            Console.WriteLine(e);
+            return;
         }
-        if (!(_dbContext.FastTransactions.Any()))
-        {
-            InsertFastTransactionRows();
-        }
-        if (!(_dbContext.SwiftTransactions.Any()))
-        {
-            InsertSwiftTransactionRows();
-        }
-        
+       
     }
 
     private void InsertStaffRows()
@@ -218,6 +230,30 @@ public class InsertRows : IInsertRows
             return;
         }
     }
+    
+    private void InsertPaymentCategoriesRows()
+    {
+        try
+        {
+            var paymentCategoriesJson = new StreamReader(@"..\Ep.Data\DataToAdd\PaymentCategories.json");
+            using (paymentCategoriesJson)
+            {
+                var json = paymentCategoriesJson.ReadToEnd();
+                var root = JsonConvert.DeserializeObject<PaymentCategoriesRoot>(json);
+                if (root != null)
+                    foreach (var paymentCategories in root.PaymentCategories)
+                    {
+                        _dbContext.PaymentCategories.Add(paymentCategories);
+                    }
+                _dbContext.SaveChanges();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
+    }
 
     private class StaffRoot
     {
@@ -246,6 +282,10 @@ public class InsertRows : IInsertRows
     private class SwiftTransactionRoot
     {
         public List<SwiftTransaction> SwiftTransaction { get; set; }
+    }
+    private class PaymentCategoriesRoot
+    {
+        public List<PaymentCategories> PaymentCategories { get; set; }
     }
 }
 

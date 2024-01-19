@@ -13,6 +13,7 @@ public class ExpensePaymentOrder : BaseEntity
     public DateTime PaymentConfirmationDate { get; set; }
     public string AccountConfirmingOrder { get; set; } 
     public string PaymentIban { get; set; }
+    public string PaymentCategory { get; set; }
     public bool? IsPaymentCompleted { get; set; }
     public DateTime PaymentCompletedDate { get; set; }
     public virtual Expenses Expenses { get; set; }
@@ -29,6 +30,7 @@ public class ExpensePaymentOrderConfiguration : IEntityTypeConfiguration<Expense
         builder.Property(x => x.PaymentConfirmationDate).IsRequired(true);
         builder.Property(x => x.AccountConfirmingOrder).IsRequired(true).HasMaxLength(20);
         builder.Property(x => x.PaymentIban).IsRequired(true).HasMaxLength(34);
+        builder.Property(x => x.PaymentCategory).IsRequired(true).HasMaxLength(14);
         builder.Property(x => x.IsPaymentCompleted).IsRequired(false);
         builder.Property(z => z.IsActive).IsRequired(true).HasDefaultValue(true);
 
