@@ -23,5 +23,8 @@ public class MapperConfig : Profile
         
         CreateMap<FastTransactionRequest, FastTransaction>();
         CreateMap<FastTransaction, FastTransactionResponse>();
+        
+        CreateMap<SwiftTransactionRequest, SwiftTransaction>();
+        CreateMap<SwiftTransaction, SwiftTransactionResponse>();
     }
 }
