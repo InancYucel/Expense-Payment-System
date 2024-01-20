@@ -21,7 +21,6 @@ public class WitcherMiddleware
             await context.Response.WriteAsync(JsonSerializer.Serialize("Hello from server"));
             return;
         }
-
         await next.Invoke(context);
     }
 }

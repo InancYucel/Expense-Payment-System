@@ -4,9 +4,12 @@ using AutoMapper;
 using Base.Token;
 using Business.Mapper;
 using Business.Queries;
+using Business.Validators;
 using Data.DbContext;
 using Data.Insert;
 using Expense_Payment_System.Middleware;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +37,11 @@ public class Startup
         services.AddDbContext<EpDbContext>(options => options.UseSqlServer(connection));
         services.AddScoped<IInsertRows, InsertRows>();
         services.AddControllers(); //Added Controllers folder classes
+        
+        //FluentValidators Install
+        services.AddValidatorsFromAssemblyContaining<AccountValidator>(); // register validators
+        services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
+        services.AddFluentValidationClientsideAdapters(); // for client side
         
         services.AddEndpointsApiExplorer(); //  Discovers endpoints
         services.AddSwaggerGen(); //Prepares documentation for Swagger

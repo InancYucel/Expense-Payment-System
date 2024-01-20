@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -17,38 +18,50 @@ public class AccountCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly AccountExist accountExist;
+    private readonly StaffExist staffExist;
 
     public AccountCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
-        _dbContext = dbContext;
-        _mapper = mapper;
+        _dbContext = dbContext; //DI
+        _mapper = mapper; //DI
+        accountExist = new AccountExist(_dbContext);
+        staffExist = new StaffExist(_dbContext);
     }
 
     public async Task<ApiResponse<AccountResponse>> Handle(AccountCqrs.CreateAccountCommand request, CancellationToken cancellationToken)
     {
-        var entity = _mapper.Map<AccountRequest, Account>(request.Model);
-        
+        if (accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
+        {
+            return new ApiResponse<AccountResponse>("This IBAN is already registered in the system");
+        }
+        if (staffExist.IsStaffExist(request.Model.StaffId)) //Checking whether StaffId is already registered in the system.
+        {
+            return new ApiResponse<AccountResponse>("This StaffId is already registered in the system");
+        }
+        var entity = _mapper.Map<AccountRequest, Account>(request.Model); //Mapping RequestAccount to Account
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
-        var mapped = _mapper.Map<Account, AccountResponse>(entityResult.Entity);
+        var mapped = _mapper.Map<Account, AccountResponse>(entityResult.Entity);  //Mapping Account to ResponseAccount
         return new ApiResponse<AccountResponse>(mapped);
     }
 
     public async Task<ApiResponse> Handle(AccountCqrs.UpdateAccountCommand request, CancellationToken cancellationToken)
     {
-        var fromDb = await _dbContext.Set<Account>().Where(x => x.AccountNumber == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var fromDb = await _dbContext.Set<Account>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
-        
-        /*fromDb.FirstName = request.Model.FirstName;
-        fromDb.LastName = request.Model.LastName;
-        fromDb.Id = request.Model.Id;
-        fromDb.IdentityNumber = request.Model.IdentityNumber;*/
+        if (accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
+        {
+            return new ApiResponse("This IBAN is already registered in the system");
+        }
+        // Don't let them change the StaffId because it breaks the process
+        fromDb.IBAN = request.Model.IBAN;
+        fromDb.Bank = request.Model.Bank;
+        fromDb.CurrencyType = request.Model.CurrencyType;
+        fromDb.Name = request.Model.Name;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
@@ -64,6 +77,6 @@ public class AccountCommandHandler :
         
         fromDb.IsActive = false;
         await _dbContext.SaveChangesAsync(cancellationToken);
-        return new ApiResponse();
+        return new ApiResponse("Soft Delete");
     }
 }

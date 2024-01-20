@@ -48,7 +48,7 @@ public class AccountController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-    public async Task<ApiResponse> Put(int id, [FromBody] AccountRequest staffRequest)
+    public async Task<ApiResponse> Put(int id, [FromBody] AccountRequestForUpdate staffRequest)
     {
         var operation = new AccountCqrs.UpdateAccountCommand(id, staffRequest);
         var result = await _mediator.Send(operation);

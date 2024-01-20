@@ -1,7 +1,6 @@
 {
   "Account": [
     {
-      "AccountNumber": 1,
       "StaffId": 3,
       "IBAN": "TR330006100519786457841326",
       "Bank": "İş Bankası",
@@ -11,7 +10,6 @@
       "OpenDate": "2005-05-16T05:50:06"
     },
     {
-      "AccountNumber": 2,
       "StaffId": 2,
       "IBAN": "TR650009371937456457849182",
       "Bank": "Ak Bank",
@@ -21,7 +19,6 @@
       "OpenDate": "2015-05-16T05:50:06"
     },
     {
-      "AccountNumber": 3,
       "StaffId": 1,
       "IBAN": "TR110006826223847587849361",
       "Bank": "Ziraat Bankası",
@@ -31,7 +28,6 @@
       "OpenDate": "2023-05-16T05:50:06"
     },
     {
-      "AccountNumber": 4,
       "StaffId": 3,
       "IBAN": "GB33BUKB20201555555555",
       "Bank": "HSBC",
@@ -41,7 +37,6 @@
       "OpenDate": "2010-05-16T05:50:06"
     },
     {
-      "AccountNumber": 5,
       "StaffId": 2,
       "IBAN": "CH5604835012345678009",
       "Bank": "Union Bank of Switzerland",
@@ -51,7 +46,6 @@
       "OpenDate": "2015-05-16T05:50:06"
     },
     {
-      "AccountNumber": 6,
       "StaffId": 1,
       "IBAN": "IS750001121234563108962099",
       "Bank": "Central Bank Of Iceland",
@@ -61,7 +55,6 @@
       "OpenDate": "2021-05-16T05:50:06"
     },
     {
-      "AccountNumber": 7,
       "StaffId": 4,
       "IBAN": "TR430001183920543108962099",
       "Bank": "Ak Bank",
@@ -71,7 +64,6 @@
       "OpenDate": "2023-05-16T05:50:06"
     },
     {
-      "AccountNumber": 8,
       "StaffId": 4,
       "IBAN": "TR420007340294720194738274",
       "Bank": "Ak Bank",
@@ -81,7 +73,6 @@
       "OpenDate": "2023-04-16T05:20:54"
     },
     {
-      "AccountNumber": 9,
       "StaffId": 4,
       "IBAN": "TR120009381736238495847343",
       "Bank": "Ak Bank",
