@@ -1,8 +1,6 @@
-using Base.Schema;
-
 namespace Schema;
 
-public class FastTransactionRequestForUpdate : BaseRequest
+public class FastTransactionRequestForUpdate 
 {
     public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
@@ -17,13 +15,12 @@ public class FastTransactionRequestForUpdate : BaseRequest
     public string ReceiverName { get; set; }
 }
 
-
 public class FastTransactionRequest : FastTransactionRequestForUpdate
 {
     public int AccountId { get; set; }
 }
 
-public class FastTransactionResponse : BaseResponse
+public class FastTransactionResponse 
 {
     public int AccountId { get; set; }
     public int ExpensePaymentOrderId { get; set; }

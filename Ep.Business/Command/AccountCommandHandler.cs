@@ -11,7 +11,7 @@ using Schema;
 
 namespace Business.Command;
 
-public class AccountCommandHandler : 
+public class AccountCommandHandler : //Mediator Interfaces
     IRequestHandler<AccountCqrs.CreateAccountCommand, ApiResponse<AccountResponse>>,
     IRequestHandler<AccountCqrs.UpdateAccountCommand,ApiResponse>,
     IRequestHandler<AccountCqrs.DeleteAccountCommand,ApiResponse>
@@ -21,11 +21,11 @@ public class AccountCommandHandler :
     private readonly AccountExist _accountExist;
     private readonly StaffExist _staffExist;
 
-    public AccountCommandHandler(EpDbContext dbContext, IMapper mapper)
+    public AccountCommandHandler(EpDbContext dbContext, IMapper mapper) //DI for dbContext and mapper
     {
         _dbContext = dbContext; //DI
         _mapper = mapper; //DI
-        _accountExist = new AccountExist(_dbContext);
+        _accountExist = new AccountExist(_dbContext); // Create it once throughout the class
         _staffExist = new StaffExist(_dbContext);
     }
 
@@ -49,9 +49,9 @@ public class AccountCommandHandler :
     public async Task<ApiResponse> Handle(AccountCqrs.UpdateAccountCommand request, CancellationToken cancellationToken)
     {
         var fromDb = await _dbContext.Set<Account>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
-        if (fromDb == null)
+        if (fromDb == null) // 
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); //If there is no record to update, the function is canceled.
         }
         if (_accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
         {
@@ -72,7 +72,7 @@ public class AccountCommandHandler :
         var fromDb = await _dbContext.Set<Account>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;

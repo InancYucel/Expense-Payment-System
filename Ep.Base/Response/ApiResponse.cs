@@ -2,13 +2,14 @@ using System.Text.Json;
 
 namespace Base.Response;
 
-public class ApiResponse
+public class ApiResponse  //All Responses are derived from this class
 {
     public override string ToString()
     {
         return JsonSerializer.Serialize(this);
     }
 
+    // Our aim is to prepare the response of all classes through a single class.
     public ApiResponse(string message = null)
     {
         if (string.IsNullOrWhiteSpace(message))

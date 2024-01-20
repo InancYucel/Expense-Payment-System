@@ -4,7 +4,7 @@ using Schema;
 
 namespace Business.Cqrs;
 
-public class PaymentCategoriesCqrs
+public class PaymentCategoriesCqrs //Mediator Records
 {
     public record GetAllPaymentCategoriesQuery() : IRequest<ApiResponse<List<PaymentCategoriesResponse>>>;
     public record GetPaymentCategoriesByIdQuery(int Id) : IRequest<ApiResponse<PaymentCategoriesResponse>>;

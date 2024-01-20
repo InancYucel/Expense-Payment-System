@@ -1,8 +1,6 @@
-using Base.Schema;
-
 namespace Schema;
 
-public class SwiftTransactionRequestForUpdate : BaseRequest
+public class SwiftTransactionRequestForUpdate
 {
     public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
@@ -24,7 +22,7 @@ public class SwiftTransactionRequest : SwiftTransactionRequestForUpdate
     public int AccountId { get; set; }
 }
 
-public class SwiftTransactionResponse : BaseResponse
+public class SwiftTransactionResponse 
 {
     public int AccountId { get; set; }
     public int ExpensePaymentOrderId { get; set; }

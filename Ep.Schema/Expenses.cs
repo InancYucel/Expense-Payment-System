@@ -1,9 +1,8 @@
 using System.Text.Json.Serialization;
-using Base.Schema;
 
 namespace Schema;
 
-public class ExpensesRequest : BaseRequest
+public class ExpensesRequest
 {
     public int StaffId { get; set; }
     public string InvoiceReferenceNumber { get; set; }
@@ -16,7 +15,7 @@ public class ExpensesRequest : BaseRequest
     public string ExpenseClaimDescription { get; set; }
 }
 
-public class ExpensesResponse : BaseResponse
+public class ExpensesResponse
 {
     public int Id { get; set; }
     public int StaffId { get; set; }
@@ -32,7 +31,7 @@ public class ExpensesResponse : BaseResponse
     public bool IsActive { get; set; }
 }
 
-public class StaffExpensesRequest : BaseRequest
+public class StaffExpensesRequest
 {
     public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }
@@ -46,7 +45,7 @@ public class StaffExpensesRequest : BaseRequest
     public string ExpensePaymentRefusal { get; set; }
 }
 
-public class ReplyExpensesRequest : BaseRequest
+public class ReplyExpensesRequest
 {
     [JsonIgnore]
     public int StaffId { get; set; }
@@ -57,7 +56,7 @@ public class ReplyExpensesRequest : BaseRequest
     public string ExpensePaymentRefusal { get; set; }
 }
 
-public class ExpensesRequestForUpdate : BaseRequest
+public class ExpensesRequestForUpdate 
 {
     public string InvoiceReferenceNumber { get; set; }
     public double InvoiceAmount { get; set; }

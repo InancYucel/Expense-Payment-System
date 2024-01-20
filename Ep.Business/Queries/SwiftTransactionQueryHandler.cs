@@ -37,7 +37,7 @@ public class SwiftTransactionQueryHandler :
 
         if (entity == null)
         {
-            return new ApiResponse<SwiftTransactionResponse>("Record not found");
+            return new ApiResponse<SwiftTransactionResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<SwiftTransaction, SwiftTransactionResponse>(entity);

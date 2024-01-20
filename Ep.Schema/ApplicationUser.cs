@@ -1,8 +1,6 @@
-using Base.Schema;
-
 namespace Schema;
 
-public class ApplicationUserRequest : BaseRequest
+public class ApplicationUserRequest 
 {
     public string UserName { get; set; }
     public string Password { get; set; }
@@ -11,7 +9,7 @@ public class ApplicationUserRequest : BaseRequest
     public string Email { get; set; }
     public string Role { get; set; }
 }
-public class ApplicationUserResponse : BaseResponse
+public class ApplicationUserResponse 
 {
     public string UserName { get; set; }
     public string Password { get; set; }

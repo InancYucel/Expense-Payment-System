@@ -15,6 +15,7 @@ public class InsertRows : IInsertRows
 
     public void InitializeDatabase()
     {
+        // Automatic db insertions so that the user does not have to enter data one by one to test the system. Each table is kept in JSONs. And writing to DB
         try
         {
             if (!(_dbContext.ApplicationUsers.Any())) 

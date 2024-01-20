@@ -9,22 +9,22 @@ using Schema;
 namespace Expense_Payment_System.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]")] 
 public class AccountController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public AccountController(IMediator mediator)
+    public AccountController(IMediator mediator) //Dependency injection for Mediator
     {
         _mediator = mediator;
     }
     
     [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] //Specifies that only users with the admin role can enter
     public async Task<ApiResponse<List<AccountResponse>>> Get()
     {
         var operation = new AccountCqrs.GetAllAccountQuery();
-        var result = await _mediator.Send(operation);
+        var result = await _mediator.Send(operation); //Mediator keeps the Colleague references within which it will communicate and provides the necessary functionality.
         return result;
     }
     

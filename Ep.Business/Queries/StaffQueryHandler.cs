@@ -39,7 +39,7 @@ public class StaffQueryHandler :
 
         if (entity == null)
         {
-            return new ApiResponse<StaffResponse>("Record not found");
+            return new ApiResponse<StaffResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<Staff, StaffResponse>(entity);

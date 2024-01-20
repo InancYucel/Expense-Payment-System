@@ -1,8 +1,6 @@
-using Base.Schema;
-
 namespace Schema;
 
-public class ExpensePaymentOrderRequest: BaseRequest
+public class ExpensePaymentOrderRequest
 {
     public int ExpenseId { get; set; }
     public DateTime PaymentConfirmationDate { get; set; }
@@ -13,7 +11,7 @@ public class ExpensePaymentOrderRequest: BaseRequest
     public DateTime PaymentCompletedDate { get; set; }
 }
 
-public class ExpensePaymentOrderResponse: BaseResponse
+public class ExpensePaymentOrderResponse
 {
     public int Id { get; set; }
     public int ExpenseId { get; set; }

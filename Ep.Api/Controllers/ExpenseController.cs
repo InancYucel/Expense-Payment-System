@@ -15,17 +15,17 @@ public class ExpensesController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public ExpensesController(IMediator mediator)
+    public ExpensesController(IMediator mediator) //Dependency injection for Mediator
     {
         _mediator = mediator;
     }
     
     [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] //Specifies that only users with the admin role can enter
     public async Task<ApiResponse<List<ExpensesResponse>>> Get()
     {
         var operation = new ExpensesCqrs.GetAllExpensesQuery();
-        var result = await _mediator.Send(operation);
+        var result = await _mediator.Send(operation); //Mediator keeps the Colleague references within which it will communicate and provides the necessary functionality.
         return result;
     }
     
@@ -66,7 +66,7 @@ public class ExpensesController : ControllerBase
     }
     
     [HttpGet("GetExpenseWithStaffId/{staffId:int}")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")] //Specifies that only users with the staff role can enter
     public async Task<ApiResponse<List<ExpensesResponse>>> GetExpenseWithStaffId(int staffId)
     {
         var operation = new ExpensesCqrs.GetExpenseByStaffIdQuery(staffId);

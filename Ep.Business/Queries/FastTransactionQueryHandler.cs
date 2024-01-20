@@ -37,7 +37,7 @@ public class FastTransactionQueryHandler :
         
         if (entity == null)
         {
-            return new ApiResponse<FastTransactionResponse>("Record not found");
+            return new ApiResponse<FastTransactionResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<FastTransaction, FastTransactionResponse>(entity);

@@ -14,17 +14,17 @@ public class StaffController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public StaffController(IMediator mediator)
+    public StaffController(IMediator mediator) //Dependency injection for Mediator
     {
         _mediator = mediator;
     }
     
     [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] //Specifies that only users with the admin role can enter
     public async Task<ApiResponse<List<StaffResponse>>> Get()
     {
         var operation = new StaffCqrs.GetAllStaffQuery();
-        var result = await _mediator.Send(operation);
+        var result = await _mediator.Send(operation); //Mediator keeps the Colleague references within which it will communicate and provides the necessary functionality.
         return result;
     }
     

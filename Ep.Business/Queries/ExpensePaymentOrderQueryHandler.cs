@@ -37,7 +37,7 @@ public class ExpensePaymentOrderQueryHandler :
 
         if (entity == null)
         {
-            return new ApiResponse<ExpensePaymentOrderResponse>("Record not found");
+            return new ApiResponse<ExpensePaymentOrderResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<ExpensePaymentOrder, ExpensePaymentOrderResponse>(entity);

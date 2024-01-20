@@ -4,7 +4,7 @@ using Schema;
 
 namespace Business.Cqrs;
 
-public class SwiftTransactionCqrs
+public class SwiftTransactionCqrs //Mediator Records
 {
     public record GetAllSwiftTransactionQuery() : IRequest<ApiResponse<List<SwiftTransactionResponse>>>;
     public record GetSwiftTransactionByIdQuery(int Id) : IRequest<ApiResponse<SwiftTransactionResponse>>;

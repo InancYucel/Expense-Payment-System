@@ -12,7 +12,7 @@ using Schema;
 
 namespace Business.Command;
 
-public class StaffCommandHandler : 
+public class StaffCommandHandler : //Mediator Interfaces
     IRequestHandler<StaffCqrs.CreateStaffCommand, ApiResponse<StaffResponse>>,
     IRequestHandler<StaffCqrs.UpdateStaffCommand,ApiResponse>,
     IRequestHandler<StaffCqrs.DeleteStaffCommand,ApiResponse>
@@ -21,11 +21,11 @@ public class StaffCommandHandler :
     private readonly IMapper _mapper;
     private readonly StaffExist _staffExist;
 
-    public StaffCommandHandler(EpDbContext dbContext, IMapper mapper)
+    public StaffCommandHandler(EpDbContext dbContext, IMapper mapper) //DI for dbContext and mapper
     {
-        _dbContext = dbContext;
-        _mapper = mapper;
-        _staffExist = new StaffExist(_dbContext);
+        _dbContext = dbContext; //DI
+        _mapper = mapper; //DI
+        _staffExist = new StaffExist(_dbContext); // Create it once throughout the class
     }
 
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.CreateStaffCommand request, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ public class StaffCommandHandler :
         var fromDb = await _dbContext.Set<Staff>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         if (_staffExist.IsStaffExist(request.Model.Id)) //Checking whether Staff ID is already registered in the system.
@@ -74,7 +74,7 @@ public class StaffCommandHandler :
         
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;

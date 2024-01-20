@@ -8,7 +8,7 @@ public class Program
     {
         Host.CreateDefaultBuilder(args)
             .ConfigureServices(serviceCollection =>
-                serviceCollection.AddScoped<IInsertRows, InsertRows>())
+                serviceCollection.AddScoped<IInsertRows, InsertRows>()) //To use dependency injection in Startup.cs
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

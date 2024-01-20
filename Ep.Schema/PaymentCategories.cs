@@ -1,13 +1,11 @@
-using Base.Schema;
-
 namespace Schema;
 
-public class PaymentCategoriesRequest : BaseRequest
+public class PaymentCategoriesRequest 
 {
     public string Category { get; set; }
 }
 
-public class PaymentCategoriesResponse : BaseResponse
+public class PaymentCategoriesResponse 
 {
     public string Category { get; set; }
 }

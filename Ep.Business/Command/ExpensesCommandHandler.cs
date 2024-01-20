@@ -11,7 +11,7 @@ using Schema;
 
 namespace Business.Command;
 
-public class ExpensesCommandHandler : 
+public class ExpensesCommandHandler : //Mediator Interfaces
     IRequestHandler<ExpensesCqrs.CreateExpenseCommand, ApiResponse<ExpensesResponse>>,
     IRequestHandler<ExpensesCqrs.UpdateExpenseCommand,ApiResponse>,
     IRequestHandler<ExpensesCqrs.DeleteExpensesCommand,ApiResponse>,
@@ -26,21 +26,21 @@ public class ExpensesCommandHandler :
     private readonly StaffExist _staffExist;
     private readonly CategoryExist _categoryExist;
 
-    public ExpensesCommandHandler(EpDbContext dbContext, IMapper mapper)
+    public ExpensesCommandHandler(EpDbContext dbContext, IMapper mapper) //DI for dbContext and mapper
     {
-        _dbContext = dbContext;
-        _mapper = mapper;
-        _staffExist = new StaffExist(_dbContext);
+        _dbContext = dbContext; //DI
+        _mapper = mapper; //DI
+        _staffExist = new StaffExist(_dbContext); // Create it once throughout the class
         _categoryExist = new CategoryExist(_dbContext);
     }
 
     public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.CreateExpenseCommand request, CancellationToken cancellationToken)
     {
-        if(!(_staffExist.IsStaffExist(request.Model.StaffId)))
+        if(!(_staffExist.IsStaffExist(request.Model.StaffId))) //If there is no Staff ID to establish a relationship with, it cannot continue.
         {
-            return new ApiResponse<ExpensesResponse>("This staffId is not registered in the system");
+            return new ApiResponse<ExpensesResponse>("This staffId is not registered in the system"); 
         }
-        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory))) //If the entered category name is not in the category table
         {
             return new ApiResponse<ExpensesResponse>("This Category is not registered in the system");
         }
@@ -58,9 +58,9 @@ public class ExpensesCommandHandler :
         var fromDb = await _dbContext.Set<Expenses>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
-        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory))) //If the entered category name is not in the category table
         {
             return new ApiResponse("This Category is not registered in the system");
         }
@@ -83,7 +83,7 @@ public class ExpensesCommandHandler :
         
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;
@@ -93,7 +93,7 @@ public class ExpensesCommandHandler :
     
     public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.CreateExpenseWithStaffIdCommand request, CancellationToken cancellationToken)
     {
-        if(!(_staffExist.IsStaffExist(request.StaffId)))
+        if(!(_staffExist.IsStaffExist(request.StaffId)))  //If there is no Staff ID to establish a relationship with, it cannot continue.
         {
             return new ApiResponse<ExpensesResponse>("This staffId is not registered in the system");
         }
@@ -111,9 +111,9 @@ public class ExpensesCommandHandler :
         var fromDb = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.Id == request.ExpenseId).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
-        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory))) //If the entered category name is not in the category table
         {
             return new ApiResponse("This Category is not registered in the system");
         }
@@ -136,7 +136,7 @@ public class ExpensesCommandHandler :
         var fromDb = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.Id == request.ExpenseId).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;
@@ -149,10 +149,10 @@ public class ExpensesCommandHandler :
         var fromDb = await _dbContext.Set<Expenses>().Where(x => x.Id == request.ExpenseId).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
-        if(!(_categoryExist.IsCategoryExist(request.Model.ExpenseCategory)))
+        if(!(_categoryExist.IsCategoryExist(request.Model.ExpenseCategory))) //If the entered category name is not in the category table
         {
             return new ApiResponse("This Category is not registered in the system");
         }

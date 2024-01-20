@@ -11,7 +11,7 @@ using Schema;
 
 namespace Business.Command;
 
-public class PaymentCategoriesCommandHandler : 
+public class PaymentCategoriesCommandHandler : //Mediator Interfaces
     IRequestHandler<PaymentCategoriesCqrs.CreatePaymentCategoriesCommand, ApiResponse<PaymentCategoriesResponse>>,
     IRequestHandler<PaymentCategoriesCqrs.UpdatePaymentCategoriesCommand,ApiResponse>,
     IRequestHandler<PaymentCategoriesCqrs.DeletePaymentCategoriesCommand,ApiResponse>
@@ -20,11 +20,11 @@ public class PaymentCategoriesCommandHandler :
     private readonly IMapper _mapper;
     private readonly CategoryExist _categoryExist;
 
-    public PaymentCategoriesCommandHandler(EpDbContext dbContext, IMapper mapper)
+    public PaymentCategoriesCommandHandler(EpDbContext dbContext, IMapper mapper) //DI for dbContext and mapper
     {
-        _dbContext = dbContext;
-        _mapper = mapper;
-        _categoryExist = new CategoryExist(_dbContext);
+        _dbContext = dbContext; //DI
+        _mapper = mapper; //DI
+        _categoryExist = new CategoryExist(_dbContext); // Create it once throughout the class
     }
 
     public async Task<ApiResponse<PaymentCategoriesResponse>> Handle(PaymentCategoriesCqrs.CreatePaymentCategoriesCommand request, CancellationToken cancellationToken)
@@ -45,7 +45,7 @@ public class PaymentCategoriesCommandHandler :
         var fromDb = await _dbContext.Set<PaymentCategories>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         if(_categoryExist.IsCategoryExist(request.Model.Category))
@@ -64,7 +64,7 @@ public class PaymentCategoriesCommandHandler :
         var fromDb = await _dbContext.Set<PaymentCategories>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;

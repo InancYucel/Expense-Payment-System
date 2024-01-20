@@ -14,17 +14,17 @@ public class FastTransactionController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public FastTransactionController(IMediator mediator)
+    public FastTransactionController(IMediator mediator) //Dependency injection for Mediator
     {
         _mediator = mediator;
     }
     
     [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] //Specifies that only users with the admin role can enter
     public async Task<ApiResponse<List<FastTransactionResponse>>> Get()
     {
         var operation = new FastTransactionCqrs.GetAllFastTransactionQuery();
-        var result = await _mediator.Send(operation);
+        var result = await _mediator.Send(operation); //Mediator keeps the Colleague references within which it will communicate and provides the necessary functionality.
         return result;
     }
     

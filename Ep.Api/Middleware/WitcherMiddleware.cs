@@ -5,11 +5,11 @@ namespace Expense_Payment_System.Middleware;
 
 public class WitcherMiddleware
 {
-    private readonly RequestDelegate next;
+    private readonly RequestDelegate _next;
 
-    public WitcherMiddleware(RequestDelegate next)
+    public WitcherMiddleware(RequestDelegate next) //Dependency Injection for Request Delegate
     {
-        this.next = next;
+        _next = next;
     }
 
     public async Task Invoke(HttpContext context)
@@ -21,6 +21,6 @@ public class WitcherMiddleware
             await context.Response.WriteAsync(JsonSerializer.Serialize("Hello from server"));
             return;
         }
-        await next.Invoke(context);
+        await _next.Invoke(context);// The next middleware is called with the Invoke() command line.
     }
 }

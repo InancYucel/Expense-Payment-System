@@ -15,16 +15,16 @@ using Schema;
 
 namespace Business.Command;
 
-public class TokenCommandHandler :
+public class TokenCommandHandler : //Mediator Interfaces
     IRequestHandler<CreateTokenCommand, ApiResponse<TokenResponse>>
 {
     private readonly EpDbContext _dbContext;
     private readonly JwtConfig _jwtConfig;
 
-    public TokenCommandHandler(EpDbContext dbContext, IOptionsMonitor<JwtConfig> jwtConfig)
+    public TokenCommandHandler(EpDbContext dbContext, IOptionsMonitor<JwtConfig> jwtConfig) //DI for dbContext and jwtConfig
     {
-        _dbContext = dbContext;
-        _jwtConfig = jwtConfig.CurrentValue;
+        _dbContext = dbContext; //DI 
+        _jwtConfig = jwtConfig.CurrentValue; //DI
     }
 
     public async Task<ApiResponse<TokenResponse>> Handle(CreateTokenCommand request,

@@ -1,9 +1,6 @@
-using Base.Schema;
-
 namespace Schema;
 
-
-public class AccountRequestForUpdate : BaseRequest
+public class AccountRequestForUpdate
 {
     public string IBAN { get; set; }
     public string Bank { get; set; }
@@ -16,7 +13,7 @@ public class AccountRequest : AccountRequestForUpdate
     public int StaffId { get; set; }
 }
 
-public class AccountResponse : BaseResponse
+public class AccountResponse
 {
     public int StaffId { get; set; }
     public string IBAN { get; set; }

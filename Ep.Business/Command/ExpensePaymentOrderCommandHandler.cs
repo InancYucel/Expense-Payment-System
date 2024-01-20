@@ -11,7 +11,7 @@ using Schema;
 
 namespace Business.Command;
 
-public class ExpensePaymentOrderCommandHandler : 
+public class ExpensePaymentOrderCommandHandler : //Mediator Interfaces
     IRequestHandler<ExpensePaymentOrderCqrs.CreateExpensePaymentOrderCommand, ApiResponse<ExpensePaymentOrderResponse>>,
     IRequestHandler<ExpensePaymentOrderCqrs.UpdateExpensePaymentOrderCommand,ApiResponse>,
     IRequestHandler<ExpensePaymentOrderCqrs.DeleteExpensePaymentOrderCommand,ApiResponse>
@@ -21,11 +21,11 @@ public class ExpensePaymentOrderCommandHandler :
     private readonly CategoryExist _categoryExist;
     private readonly ExpensePaymentOrderExist _expensePaymentOrderExist;
 
-    public ExpensePaymentOrderCommandHandler(EpDbContext dbContext, IMapper mapper)
+    public ExpensePaymentOrderCommandHandler(EpDbContext dbContext, IMapper mapper) //DI for dbContext and mapper
     {
-        _dbContext = dbContext;
-        _mapper = mapper;
-        _categoryExist = new CategoryExist(_dbContext);
+        _dbContext = dbContext; //DI
+        _mapper = mapper; //DI
+        _categoryExist = new CategoryExist(_dbContext); // Create it once throughout the class
         _expensePaymentOrderExist = new ExpensePaymentOrderExist(_dbContext);
     }
 
@@ -38,7 +38,7 @@ public class ExpensePaymentOrderCommandHandler :
         var entity = _mapper.Map<ExpensePaymentOrderRequest, ExpensePaymentOrder>(request.Model);
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
+        //Conversion between models with Mapper
         var mapped = _mapper.Map<ExpensePaymentOrder, ExpensePaymentOrderResponse>(entityResult.Entity);
         return new ApiResponse<ExpensePaymentOrderResponse>(mapped);
     }
@@ -48,13 +48,13 @@ public class ExpensePaymentOrderCommandHandler :
         var fromDb = await _dbContext.Set<ExpensePaymentOrder>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         if(!(_categoryExist.IsCategoryExist(request.Model.PaymentCategory)))
         {
-            return new ApiResponse("This Category is not registered in the system");
+            return new ApiResponse("This Category is not registered in the system"); //If the entered category name is not in the category table
         }
-        if(!(_expensePaymentOrderExist.IsExpenseIdIsExist(request.Model.ExpenseId)))
+        if(!(_expensePaymentOrderExist.IsExpenseIdIsExist(request.Model.ExpenseId))) //If there is no Expense ID to establish a relationship with, it cannot continue.
         {
             return new ApiResponse("This ExpenseId is not registered in the system");
         }
@@ -74,7 +74,7 @@ public class ExpensePaymentOrderCommandHandler :
         var fromDb = await _dbContext.Set<ExpensePaymentOrder>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
-            return new ApiResponse("Record not found");
+            return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         fromDb.IsActive = false;

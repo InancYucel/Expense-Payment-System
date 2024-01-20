@@ -12,16 +12,17 @@ public class TokenController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public TokenController(IMediator mediator)
+    public TokenController(IMediator mediator) //Dependency injection for Mediator
     {
         _mediator = mediator;
     }
     
     [HttpPost]
+    // Therefore, there is no authorization for user login.
     public async Task<ApiResponse<TokenResponse>> Post([FromBody] TokenRequest request)
     {
         var operation = new CreateTokenCommand(request);
-        var result = await _mediator.Send(operation);
+        var result = await _mediator.Send(operation); //Mediator keeps the Colleague references within which it will communicate and provides the necessary functionality.
         return result;
     }
 }

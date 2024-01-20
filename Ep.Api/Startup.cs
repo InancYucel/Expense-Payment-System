@@ -22,7 +22,7 @@ public class Startup
     private readonly IConfiguration _configuration;
     private readonly IInsertRows _insertRows;
     
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration) 
     {
         _configuration = configuration;
     }
@@ -33,12 +33,12 @@ public class Startup
         var connection = _configuration.GetConnectionString("MsSqlConnection");
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StaffQueryHandler).GetTypeInfo().Assembly));
         var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperConfig()));
-        services.AddSingleton(mapperConfig.CreateMapper());
+        services.AddSingleton(mapperConfig.CreateMapper()); //Start Mapper with singleton
         services.AddDbContext<EpDbContext>(options => options.UseSqlServer(connection));
         services.AddScoped<IInsertRows, InsertRows>();
         services.AddControllers(); //Added Controllers folder classes
         
-        //FluentValidators Install
+        //Fluent Validators Install
         services.AddValidatorsFromAssemblyContaining<AccountValidator>(); // register validators
         services.AddFluentValidationAutoValidation(); // the same old MVC pipeline behavior
         services.AddFluentValidationClientsideAdapters(); // for client side
@@ -101,7 +101,7 @@ public class Startup
         
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInsertRows ins)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInsertRows ins) //DI for InsertRows
     {
         // Configure the HTTP request pipeline.
         if (env.IsDevelopment()) //If we are working in a development environment, UI is enabled.
@@ -110,12 +110,13 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        
+        // Middleware definitions
         app.UseMiddleware<WitcherMiddleware>();
         app.UseMiddleware<ErrorHandlerMiddleware>();
 
         app.UseHttpsRedirection();
-        app.UseAuthentication(); //JWT
+        app.UseAuthentication(); //JWT adjustment
         app.UseRouting();
         app.UseAuthorization();
         app.UseEndpoints(x => { x.MapControllers(); }); 

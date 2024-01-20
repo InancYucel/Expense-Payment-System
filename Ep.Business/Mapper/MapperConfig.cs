@@ -6,6 +6,7 @@ namespace Business.Mapper;
 
 public class MapperConfig : Profile
 {
+    // We record which models can be converted to which models in Mapper settings.
     public MapperConfig()
     {
         CreateMap<StaffRequest, Staff>();

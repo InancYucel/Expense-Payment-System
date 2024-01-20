@@ -1,6 +1,6 @@
 namespace Base.Token;
 
-public class JwtConfig
+public class JwtConfig //A model for JWT Aut.
 {
     public string Secret { get; set; }
     public string Issuer { get; set; }

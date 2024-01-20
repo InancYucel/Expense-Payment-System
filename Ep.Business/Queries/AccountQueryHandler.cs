@@ -37,7 +37,7 @@ public class AccountQueryHandler :
 
         if (entity == null)
         {
-            return new ApiResponse<AccountResponse>("Record not found");
+            return new ApiResponse<AccountResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<Account, AccountResponse>(entity);

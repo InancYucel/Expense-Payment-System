@@ -46,7 +46,7 @@ public class ExpensesQueryHandler :
 
         if (entity == null)
         {
-            return new ApiResponse<ExpensesResponse>("Record not found");
+            return new ApiResponse<ExpensesResponse>("Record not found"); // If there is no record to update, the function is canceled.
         }
         
         var mapped = _mapper.Map<Expenses, ExpensesResponse>(entity);
@@ -60,7 +60,7 @@ public class ExpensesQueryHandler :
 
         if (!list.Any())
         {
-            return new ApiResponse<List<ExpensesResponse>>("Record not found");
+            return new ApiResponse<List<ExpensesResponse>>("Record not found"); // If there is no record to update, the function is canceled.
         }
         var mappedList = _mapper.Map<List<Expenses>, List<ExpensesResponse>>(list);
         return new ApiResponse<List<ExpensesResponse>>(mappedList);
@@ -69,6 +69,7 @@ public class ExpensesQueryHandler :
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithRequestStatus request, CancellationToken cancellationToken)
     {
+        // Filter Expense With Request Status
         var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
                                                                && string.Equals(x.ExpenseRequestStatus.ToLower(),
                                                                    request.ExpenseRequestStatus.ToLower(),
@@ -87,6 +88,7 @@ public class ExpensesQueryHandler :
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithInvoiceAmount request, CancellationToken cancellationToken)
     {
+        // Filter Expense With Invoice Amount
         var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
                                                                && x.InvoiceAmount == request.InvoiceAmount)
             .ToListAsync(cancellationToken);
@@ -103,6 +105,7 @@ public class ExpensesQueryHandler :
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.GetRejectedRefundRequests request,CancellationToken cancellationToken)
     {
+        // Automatically retrieves rejected requests
         var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.ExpenseRequestStatus == "denied").ToListAsync(cancellationToken);
 
         if (!list.Any())

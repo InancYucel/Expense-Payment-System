@@ -4,7 +4,7 @@ using Schema;
 
 namespace Business.Cqrs;
 
-public class StaffCqrs
+public class StaffCqrs //Mediator Records
 {
     public record GetAllStaffQuery() : IRequest<ApiResponse<List<StaffResponse>>>;
     public record GetStaffByIdQuery(int Id) : IRequest<ApiResponse<StaffResponse>>;

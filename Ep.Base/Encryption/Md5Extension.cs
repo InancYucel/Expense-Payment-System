@@ -1,6 +1,6 @@
 namespace Base.Encryption;
 
-public class Md5Extension
+public class Md5Extension //Extension required for md5 encryption
 {
     public static string Create(string input)
     {
