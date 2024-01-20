@@ -46,8 +46,8 @@ public class SwiftTransactionConfiguration : IEntityTypeConfiguration<SwiftTrans
         builder.Property(z => z.TransactionDate).IsRequired(true);
         builder.Property(z => z.Amount).IsRequired(true).HasColumnType("decimal(18,4)");
         builder.Property(z => z.CurrencyType).IsRequired(true).HasMaxLength(3);
-        builder.Property(z => z.Description).IsRequired(false).HasMaxLength(300);
-        builder.Property(z => z.ReferenceNumber).IsRequired(true).HasMaxLength(50);
+        builder.Property(z => z.Description).IsRequired(false).HasMaxLength(50);
+        builder.Property(z => z.ReferenceNumber).IsRequired(true).HasMaxLength(10);
         builder.Property(z => z.SenderIban).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.SenderBank).IsRequired(true).HasMaxLength(50);
         builder.Property(z => z.SenderName).IsRequired(true).HasMaxLength(50);

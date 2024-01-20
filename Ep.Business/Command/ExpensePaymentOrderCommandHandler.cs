@@ -25,6 +25,7 @@ public class ExpensePaymentOrderCommandHandler :
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _categoryExist = new CategoryExist(_dbContext);
         _expensePaymentOrderExist = new ExpensePaymentOrderExist(_dbContext);
     }
 

@@ -48,7 +48,7 @@ public class FastTransactionController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-    public async Task<ApiResponse> Put(int id, [FromBody] FastTransactionRequest staffRequest)
+    public async Task<ApiResponse> Put(int id, [FromBody] FastTransactionRequestForUpdate staffRequest)
     {
         var operation = new FastTransactionCqrs.UpdateFastTransactionCommand(id, staffRequest);
         var result = await _mediator.Send(operation);

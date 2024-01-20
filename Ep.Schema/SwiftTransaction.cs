@@ -2,13 +2,12 @@ using Base.Schema;
 
 namespace Schema;
 
-public class SwiftTransactionRequest : BaseRequest
+public class SwiftTransactionRequestForUpdate : BaseRequest
 {
-    public int AccountId { get; set; }
     public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
     public DateTime TransactionDate { get; set; }
-    public decimal Amount { get; set; }
+    public double Amount { get; set; }
     public string CurrencyType { get; set; }
     public string Description { get; set; }
     public string SenderAccount { get; set; }
@@ -20,13 +19,18 @@ public class SwiftTransactionRequest : BaseRequest
     public string ReceiverName { get; set; }
 }
 
+public class SwiftTransactionRequest : SwiftTransactionRequestForUpdate
+{
+    public int AccountId { get; set; }
+}
+
 public class SwiftTransactionResponse : BaseResponse
 {
     public int AccountId { get; set; }
     public int ExpensePaymentOrderId { get; set; }
     public string ReferenceNumber { get; set; }
     public DateTime TransactionDate { get; set; }
-    public decimal Amount { get; set; }
+    public double Amount { get; set; }
     public string CurrencyType { get; set; }
     public string Description { get; set; }
     public string SenderAccount { get; set; }

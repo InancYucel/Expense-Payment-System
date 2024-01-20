@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -17,20 +18,31 @@ public class FastTransactionCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
-
+    private readonly ExpensePaymentOrderExist _expensePaymentOrderExist;
+    private readonly TransactionExist _transactionExist;
+    
     public FastTransactionCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _expensePaymentOrderExist = new ExpensePaymentOrderExist(_dbContext);
+        _transactionExist = new TransactionExist(_dbContext);
     }
 
     public async Task<ApiResponse<FastTransactionResponse>> Handle(FastTransactionCqrs.CreateFastTransactionCommand request, CancellationToken cancellationToken)
     {
-        var entity = _mapper.Map<FastTransactionRequest, FastTransaction>(request.Model);
+        if(_expensePaymentOrderExist.IsExpensePaymentOrderIdIsExist(request.Model.ExpensePaymentOrderId))
+        {
+            return new ApiResponse<FastTransactionResponse>("This Expense Payment Order ID is registered in the system");
+        }
+        if(_transactionExist.IsReferenceNumberExistInFastTransaction(request.Model.ReferenceNumber))
+        {
+            return new ApiResponse<FastTransactionResponse>("This ReferenceNumber is registered in the system");
+        }
         
+        var entity = _mapper.Map<FastTransactionRequest, FastTransaction>(request.Model);
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         var mapped = _mapper.Map<FastTransaction, FastTransactionResponse>(entityResult.Entity);
         return new ApiResponse<FastTransactionResponse>(mapped);
     }
@@ -42,13 +54,26 @@ public class FastTransactionCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
         
-        /*fromDb.FirstName = request.Model.FirstName;
-        fromDb.LastName = request.Model.LastName;
-        fromDb.Id = request.Model.Id;
-        fromDb.IdentityNumber = request.Model.IdentityNumber;*/
+        if(_expensePaymentOrderExist.IsExpensePaymentOrderIdIsExist(request.Model.ExpensePaymentOrderId))
+        {
+            return new ApiResponse("This Expense Payment Order ID is registered in the system");
+        }
+        if(_transactionExist.IsReferenceNumberExistInFastTransaction(request.Model.ReferenceNumber))
+        {
+            return new ApiResponse("This ReferenceNumber is registered in the system");
+        }
+        
+        fromDb.ReferenceNumber = request.Model.ReferenceNumber;
+        fromDb.TransactionDate = request.Model.TransactionDate;
+        fromDb.Amount = request.Model.Amount;
+        fromDb.Description = request.Model.Description;
+        fromDb.SenderBank = request.Model.SenderBank;
+        fromDb.SenderIban = request.Model.SenderIban;
+        fromDb.SenderName = request.Model.SenderName;
+        fromDb.ReceiverBank = request.Model.ReceiverBank;
+        fromDb.ReceiverIban = request.Model.ReceiverIban;
+        fromDb.ReceiverName = request.Model.ReceiverName;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();

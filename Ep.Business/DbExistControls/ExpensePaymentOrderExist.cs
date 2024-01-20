@@ -17,4 +17,10 @@ public class ExpensePaymentOrderExist
         var fromDb = _dbContext.Set<ExpensePaymentOrder>().FirstOrDefault(x => x.ExpenseId == expenseId);
         return fromDb != null;
     }
+    
+    public bool IsExpensePaymentOrderIdIsExist(int expensePaymentOrderId)
+    {
+        var fromDb = _dbContext.Set<ExpensePaymentOrder>().FirstOrDefault(x => x.Id == expensePaymentOrderId);
+        return fromDb != null;
+    }
 }
