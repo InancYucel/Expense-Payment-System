@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -17,20 +18,24 @@ public class PaymentCategoriesCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly CategoryExist _categoryExist;
 
     public PaymentCategoriesCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _categoryExist = new CategoryExist(_dbContext);
     }
 
     public async Task<ApiResponse<PaymentCategoriesResponse>> Handle(PaymentCategoriesCqrs.CreatePaymentCategoriesCommand request, CancellationToken cancellationToken)
     {
+        if(_categoryExist.IsCategoryExist(request.Model.Category))
+        {
+            return new ApiResponse<PaymentCategoriesResponse>("This Category is already added");
+        }
         var entity = _mapper.Map<PaymentCategoriesRequest, PaymentCategories>(request.Model);
-        
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         var mapped = _mapper.Map<PaymentCategories, PaymentCategoriesResponse>(entityResult.Entity);
         return new ApiResponse<PaymentCategoriesResponse>(mapped);
     }
@@ -42,8 +47,11 @@ public class PaymentCategoriesCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
+        
+        if(_categoryExist.IsCategoryExist(request.Model.Category))
+        {
+            return new ApiResponse("This Category is already added");
+        }
         
         fromDb.Category = request.Model.Category;
         

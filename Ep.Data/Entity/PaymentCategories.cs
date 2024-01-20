@@ -17,6 +17,7 @@ public class PaymentCategoriesConfiguration : IEntityTypeConfiguration<PaymentCa
     {
         // Not assigning values automatically
         builder.Property(x => x.Id).IsRequired(true);
+        builder.Property(x => x.Category).IsRequired(true).HasMaxLength(20);
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasKey(z => z.Id);
     }
