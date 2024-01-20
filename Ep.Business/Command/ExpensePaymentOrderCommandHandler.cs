@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -17,17 +18,23 @@ public class ExpensePaymentOrderCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly CategoryExist _categoryExist;
+    private readonly ExpensePaymentOrderExist _expensePaymentOrderExist;
 
     public ExpensePaymentOrderCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _expensePaymentOrderExist = new ExpensePaymentOrderExist(_dbContext);
     }
 
     public async Task<ApiResponse<ExpensePaymentOrderResponse>> Handle(ExpensePaymentOrderCqrs.CreateExpensePaymentOrderCommand request, CancellationToken cancellationToken)
     {
+        if(!(_categoryExist.IsCategoryExist(request.Model.PaymentCategory)))
+        {
+            return new ApiResponse<ExpensePaymentOrderResponse>("This Category is not registered in the system");
+        }
         var entity = _mapper.Map<ExpensePaymentOrderRequest, ExpensePaymentOrder>(request.Model);
-        
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -42,13 +49,20 @@ public class ExpensePaymentOrderCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
-        
-        /*fromDb.FirstName = request.Model.FirstName;
-        fromDb.LastName = request.Model.LastName;
-        fromDb.Id = request.Model.Id;
-        fromDb.IdentityNumber = request.Model.IdentityNumber;*/
+        if(!(_categoryExist.IsCategoryExist(request.Model.PaymentCategory)))
+        {
+            return new ApiResponse("This Category is not registered in the system");
+        }
+        if(!(_expensePaymentOrderExist.IsExpenseIdIsExist(request.Model.ExpenseId)))
+        {
+            return new ApiResponse("This ExpenseId is not registered in the system");
+        }
+        fromDb.PaymentConfirmationDate = request.Model.PaymentConfirmationDate;
+        fromDb.AccountConfirmingOrder = request.Model.AccountConfirmingOrder;
+        fromDb.PaymentIban = request.Model.PaymentIban;
+        fromDb.PaymentCategory = request.Model.PaymentCategory;
+        fromDb.IsPaymentCompleted = request.Model.IsPaymentCompleted;
+        fromDb.PaymentCompletedDate = request.Model.PaymentCompletedDate;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
