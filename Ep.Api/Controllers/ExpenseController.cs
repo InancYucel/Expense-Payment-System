@@ -49,7 +49,7 @@ public class ExpensesController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-    public async Task<ApiResponse> Put(int id, [FromBody] ExpensesRequest expense)
+    public async Task<ApiResponse> Put(int id, [FromBody] ExpensesRequestForUpdate expense)
     {
         var operation = new ExpensesCqrs.UpdateExpenseCommand(id, expense);
         var result = await _mediator.Send(operation);

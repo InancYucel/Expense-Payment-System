@@ -18,24 +18,24 @@ public class AccountCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
-    private readonly AccountExist accountExist;
-    private readonly StaffExist staffExist;
+    private readonly AccountExist _accountExist;
+    private readonly StaffExist _staffExist;
 
     public AccountCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext; //DI
         _mapper = mapper; //DI
-        accountExist = new AccountExist(_dbContext);
-        staffExist = new StaffExist(_dbContext);
+        _accountExist = new AccountExist(_dbContext);
+        _staffExist = new StaffExist(_dbContext);
     }
 
     public async Task<ApiResponse<AccountResponse>> Handle(AccountCqrs.CreateAccountCommand request, CancellationToken cancellationToken)
     {
-        if (accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
+        if (_accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
         {
             return new ApiResponse<AccountResponse>("This IBAN is already registered in the system");
         }
-        if (staffExist.IsStaffExist(request.Model.StaffId)) //Checking whether StaffId is already registered in the system.
+        if (_staffExist.IsStaffExist(request.Model.StaffId)) //Checking whether StaffId is already registered in the system.
         {
             return new ApiResponse<AccountResponse>("This StaffId is already registered in the system");
         }
@@ -53,7 +53,7 @@ public class AccountCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        if (accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
+        if (_accountExist.IsIbanExist(request.Model.IBAN)) //Checking whether Iban is already registered in the system.
         {
             return new ApiResponse("This IBAN is already registered in the system");
         }

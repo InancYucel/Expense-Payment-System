@@ -2,7 +2,7 @@
   "ApplicationUser": [
     {
       "UserName": "staff",
-      "Password": "3dda245c080c0c939b49940899d83ce9",
+      "Password": "2c4ee59ab102b4044ce15d7bed0717bf",
       "FirstName": "Inanc",
       "LastName": "Yucel",
       "Email": "inancyucel@gmail.com",
@@ -13,7 +13,7 @@
     },
     {
       "UserName": "admin",
-      "Password": "2c4ee59ab102b4044ce15d7bed0717bf",
+      "Password": "3dda245c080c0c939b49940899d83ce9",
       "FirstName": "Mustafa",
       "LastName": "Kemal",
       "Email": "bandirma@gmail.com",

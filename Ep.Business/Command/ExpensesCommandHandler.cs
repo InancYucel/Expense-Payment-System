@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Business.Functional;
 using Data.DbContext;
 using Data.Entity;
@@ -22,18 +23,29 @@ public class ExpensesCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly StaffExist _staffExist;
+    private readonly CategoryExist _categoryExist;
 
     public ExpensesCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _staffExist = new StaffExist(_dbContext);
+        _categoryExist = new CategoryExist(_dbContext);
     }
 
     public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.CreateExpenseCommand request, CancellationToken cancellationToken)
     {
-        var entity = _mapper.Map<ExpensesRequest, Expenses>(request.Model);
-        // TODO Staff tablosunda bulunmayan ID'li bir staffId verilince patlıyor kontrol edilmeli fluent validation ile
+        if(!(_staffExist.IsStaffExist(request.Model.StaffId)))
+        {
+            return new ApiResponse<ExpensesResponse>("This staffId is not registered in the system");
+        }
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        {
+            return new ApiResponse<ExpensesResponse>("This Category is not registered in the system");
+        }
         
+        var entity = _mapper.Map<ExpensesRequest, Expenses>(request.Model);
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -48,14 +60,18 @@ public class ExpensesCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
-        
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        {
+            return new ApiResponse("This Category is not registered in the system");
+        }
         fromDb.InvoiceReferenceNumber = request.Model.InvoiceReferenceNumber;
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
+        fromDb.InvoiceCurrencyType = request.Model.InvoiceCurrencyType;
         fromDb.InvoiceCategory = request.Model.InvoiceCategory;
+        fromDb.InvoiceDate = request.Model.InvoiceCategory;
+        fromDb.PaymentInstrument = request.Model.PaymentInstrument;
+        fromDb.PaymentLocation = request.Model.PaymentLocation;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;
-        fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
@@ -77,7 +93,10 @@ public class ExpensesCommandHandler :
     
     public async Task<ApiResponse<ExpensesResponse>> Handle(ExpensesCqrs.CreateExpenseWithStaffIdCommand request, CancellationToken cancellationToken)
     {
-        // TODO Staff tablosunda bulunmayan ID'li bir staffId verilince patlıyor kontrol edilmeli fluent validation ile
+        if(!(_staffExist.IsStaffExist(request.StaffId)))
+        {
+            return new ApiResponse<ExpensesResponse>("This staffId is not registered in the system");
+        }
         var entity = _mapper.Map<StaffExpensesRequest, Expenses>(request.Model);
         entity.StaffId = request.StaffId;
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
@@ -94,12 +113,18 @@ public class ExpensesCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
+        if(!(_categoryExist.IsCategoryExist(request.Model.InvoiceCategory)))
+        {
+            return new ApiResponse("This Category is not registered in the system");
+        }
         
         fromDb.InvoiceReferenceNumber = request.Model.InvoiceReferenceNumber;
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
+        fromDb.InvoiceCurrencyType = request.Model.InvoiceCurrencyType;
         fromDb.InvoiceCategory = request.Model.InvoiceCategory;
+        fromDb.InvoiceDate = request.Model.InvoiceCategory;
+        fromDb.PaymentInstrument = request.Model.PaymentInstrument;
+        fromDb.PaymentLocation = request.Model.PaymentLocation;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -126,7 +151,12 @@ public class ExpensesCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-
+        
+        if(!(_categoryExist.IsCategoryExist(request.Model.ExpenseCategory)))
+        {
+            return new ApiResponse("This Category is not registered in the system");
+        }
+        
         if (!(ExpenseStatusControl(fromDb.ExpenseRequestStatus.ToLower(), request.Model.ExpenseRequestStatus.ToLower())))
         {
             return new ApiResponse("Approved expense cannot be changed");
@@ -138,19 +168,17 @@ public class ExpensesCommandHandler :
             expensePayment.CreateExpensePaymentOrder(request.ExpenseId, request.Model.InvoiceAmount);
         }
         
+        fromDb.InvoiceAmount = request.Model.InvoiceAmount;
+        fromDb.InvoiceCurrencyType = request.Model.InvoiceCurrencyType;
+        fromDb.InvoiceCategory = request.Model.ExpenseCategory;
         fromDb.ExpenseRequestStatus = request.Model.ExpenseRequestStatus;
         fromDb.ExpensePaymentRefusal = request.Model.ExpensePaymentRefusal;
         
-        var saveResult = await _dbContext.SaveChangesAsync(cancellationToken);
-
-        if (saveResult > 0)
-        {
-            
-        }
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
     }
 
-    public bool ExpenseStatusControl(string dbRequestStatus, string modelRequestStatus)
+    private bool ExpenseStatusControl(string dbRequestStatus, string modelRequestStatus)
     {
         if (dbRequestStatus == "approved")
         {

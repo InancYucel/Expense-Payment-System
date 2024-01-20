@@ -14,6 +14,7 @@ public class Expenses : BaseEntity
     public double InvoiceAmount { get; set; }
     public string InvoiceCurrencyType { get; set; }
     public string InvoiceCategory { get; set; }
+    public string InvoiceDate { get; set; }
     public string PaymentInstrument { get; set; }
     public string PaymentLocation { get; set; }
     public string ExpenseClaimDescription { get; set; }
@@ -29,12 +30,13 @@ public class ExpensesConfiguration : IEntityTypeConfiguration<Expenses>
     {
         builder.Property(x => x.Id).IsRequired(true);
         builder.Property(x => x.StaffId).IsRequired(true).ValueGeneratedNever();
-        builder.Property(x => x.InvoiceReferenceNumber).IsRequired(true);
-        builder.Property(x => x.InvoiceAmount).IsRequired(true).HasMaxLength(11);
+        builder.Property(x => x.InvoiceReferenceNumber).IsRequired(true).HasMaxLength(10);
+        builder.Property(x => x.InvoiceAmount).IsRequired(true);
         builder.Property(x => x.InvoiceCategory).IsRequired(true).HasMaxLength(15);
+        builder.Property(x => x.InvoiceDate).IsRequired(true);
         builder.Property(x => x.PaymentInstrument).IsRequired(true).HasMaxLength(15);
-        builder.Property(x => x.PaymentLocation).IsRequired(true).HasMaxLength(50);
-        builder.Property(x => x.ExpenseClaimDescription).IsRequired(true).HasMaxLength(50);
+        builder.Property(x => x.PaymentLocation).IsRequired(true).HasMaxLength(40);
+        builder.Property(x => x.ExpenseClaimDescription).IsRequired(true).HasMaxLength(40);
         builder.Property(x => x.ExpenseRequestStatus).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.ExpensePaymentRefusal).IsRequired(false).HasMaxLength(50);
         builder.Property(z => z.IsActive).IsRequired(true).HasDefaultValue(true);

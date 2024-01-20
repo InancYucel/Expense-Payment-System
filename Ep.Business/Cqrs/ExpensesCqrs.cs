@@ -9,7 +9,7 @@ public class ExpensesCqrs
     public record GetAllExpensesQuery() : IRequest<ApiResponse<List<ExpensesResponse>>>;
     public record GetExpenseByIdQuery(int Id) : IRequest<ApiResponse<ExpensesResponse>>;
     public record DeleteExpensesCommand(int Id) : IRequest<ApiResponse>;
-    public record UpdateExpenseCommand(int Id,ExpensesRequest Model) : IRequest<ApiResponse>;
+    public record UpdateExpenseCommand(int Id,ExpensesRequestForUpdate Model) : IRequest<ApiResponse>;
     public record CreateExpenseCommand(ExpensesRequest Model) : IRequest<ApiResponse<ExpensesResponse>>;
     
     public record GetExpenseByStaffIdQuery(int StaffId) : IRequest<ApiResponse<List<ExpensesResponse>>>;
