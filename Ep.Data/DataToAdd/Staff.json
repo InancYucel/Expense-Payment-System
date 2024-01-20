@@ -1,7 +1,6 @@
 {
   "Staff": [
     {
-      "Id": "1",
       "IdentityNumber": "24604424443",
       "FirstName": "Inanc",
       "LastName": "Yucel",
@@ -9,7 +8,6 @@
       "IsActive": 1
     },
     {
-      "Id": "2",
       "IdentityNumber": "32572342354",
       "FirstName": "Debreli",
       "LastName": "Hasan",
@@ -17,7 +15,6 @@
       "IsActive": 1
     },
     {
-      "Id": "3",
       "IdentityNumber": "12385562345",
       "FirstName": "Koca",
       "LastName": "Yusuf",
@@ -25,7 +22,6 @@
       "IsActive": 1
     },
     {
-      "Id": "4",
       "IdentityNumber": "11111111111",
       "FirstName": "A.Ş.K",
       "LastName": " Limited AŞ",

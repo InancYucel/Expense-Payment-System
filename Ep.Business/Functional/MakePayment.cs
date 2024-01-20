@@ -87,7 +87,7 @@ public class MakePayment
         
         // ID of sender accounts, i.e. company accounts, is 4
         // TODO eğer jsonsuz ayağa kaldırılır ise ödemenin çıkacağı hesap bulunamayacak, bir çözüm ?
-        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
+        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 99 && x.CurrencyType == expense.InvoiceCurrencyType);
         var row = new FastTransaction
         {
             AccountId = receiverAccount.Id,
@@ -127,7 +127,7 @@ public class MakePayment
             randomReferenceNumber = new Random().Next(1000000, 9999999).ToString();
         }
         // TODO eğer jsonsuz ayağa kaldırılır ise ödemenin çıkacağı hesap bulunamayacak, bir çözüm ?
-        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 4 && x.CurrencyType == expense.InvoiceCurrencyType);
+        var senderAccount = _dbContext.Set<Account>().FirstOrDefault(x => x.StaffId == 99 && x.CurrencyType == expense.InvoiceCurrencyType);
         var row = new SwiftTransaction
         {
             AccountId = receiverAccount.Id,

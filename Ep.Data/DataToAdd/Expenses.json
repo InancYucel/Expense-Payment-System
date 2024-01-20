@@ -2,7 +2,7 @@
   "Expenses": [
     {
       "StaffId": "3",
-      "InvoiceReferenceNumber": "B012020000073165",
+      "InvoiceReferenceNumber": "B012020068",
       "InvoiceAmount": "1050",
       "InvoiceCurrencyType": "TRY",
       "InvoiceCategory": "Fuel",
@@ -15,7 +15,7 @@
     },
     {
       "StaffId": "2",
-      "InvoiceReferenceNumber": "C939394771728394",
+      "InvoiceReferenceNumber": "C939394771",
       "InvoiceAmount": "300",
       "InvoiceCurrencyType": "TRY",
       "InvoiceCategory": "Food",
@@ -28,7 +28,7 @@
     },
     {
       "StaffId": "1",
-      "InvoiceReferenceNumber": "D010294839234234",
+      "InvoiceReferenceNumber": "D010294839",
       "InvoiceAmount": "10000",
       "InvoiceCurrencyType": "TRY",
       "InvoiceCategory": "Repair",
@@ -41,7 +41,7 @@
     },
     {
       "StaffId": "1",
-      "InvoiceReferenceNumber": "K002830173947123",
+      "InvoiceReferenceNumber": "K002830173",
       "InvoiceAmount": "250",
       "InvoiceCurrencyType": "USD",
       "InvoiceCategory": "Healt",
@@ -54,7 +54,7 @@
     },
     {
       "StaffId": "2",
-      "InvoiceReferenceNumber": "W091723419374957",
+      "InvoiceReferenceNumber": "W091728341",
       "InvoiceAmount": "300",
       "InvoiceCurrencyType": "TRY",
       "InvoiceCategory": "Transport",
@@ -67,10 +67,10 @@
     },
     {
       "StaffId": "3",
-      "InvoiceReferenceNumber": "P038103729361435",
+      "InvoiceReferenceNumber": "P038103723",
       "InvoiceAmount": "100",
       "InvoiceCurrencyType": "USD",
-      "InvoiceCategory": "Stationery",
+      "InvoiceCategory": "Material",
       "InvoiceDate": "2019-03-16T05:30:41",
       "PaymentInstrument": "Cash",
       "PaymentLocation": "ABD California",
@@ -80,7 +80,7 @@
     },
     {
       "StaffId": "2",
-      "InvoiceReferenceNumber": "W039234783478324",
+      "InvoiceReferenceNumber": "W039234734",
       "InvoiceAmount": "999999999",
       "InvoiceCurrencyType": "EUR",
       "InvoiceCategory": "Charity",
@@ -93,20 +93,20 @@
     },
     {
       "StaffId": "1",
-      "InvoiceReferenceNumber": "D013245235233532",
+      "InvoiceReferenceNumber": "D013245252",
       "InvoiceAmount": "50000",
       "InvoiceCurrencyType": "TRY",
       "InvoiceCategory": "DLSS",
       "InvoiceDate": "2022-9-12T05:11:11",
       "PaymentInstrument": "Credit Card",
       "PaymentLocation": "Ankara Batıkent",
-      "ExpenseClaimDescription": "My new RTX 4090 graphics card is very good",
+      "ExpenseClaimDescription": "My new RTX 4090 is very good",
       "ExpenseRequestStatus": "denied",
       "IsActive": 1
     },
     {
       "StaffId": "3",
-      "InvoiceReferenceNumber": "A019237234632823",
+      "InvoiceReferenceNumber": "A019237723",
       "InvoiceAmount": "110",
       "InvoiceCurrencyType": "USD",
       "InvoiceCategory": "Supplement",

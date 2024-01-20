@@ -32,7 +32,7 @@ public class ExpensePaymentOrderConfiguration : IEntityTypeConfiguration<Expense
         builder.Property(x => x.PaymentIban).IsRequired(true).HasMaxLength(26);
         builder.Property(x => x.PaymentCategory).IsRequired(true).HasMaxLength(14);
         builder.Property(x => x.IsPaymentCompleted).IsRequired(false);
-        builder.Property(x => x.PaymentCompletedDate).IsRequired(false);
+        builder.Property(x => x.PaymentCompletedDate).IsRequired(true);
         builder.Property(z => z.IsActive).IsRequired(true).HasDefaultValue(true);
 
         builder.HasIndex(x => x.Id).IsUnique(true);
