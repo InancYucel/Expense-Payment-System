@@ -21,7 +21,7 @@ public class StaffConfiguration : IEntityTypeConfiguration<Staff>
 {
     public void Configure(EntityTypeBuilder<Staff> builder)
     {
-        builder.Property(x => x.Id).IsRequired(true).ValueGeneratedNever();
+        builder.Property(x => x.Id).IsRequired(true);
         builder.Property(x => x.IdentityNumber).IsRequired(true).HasMaxLength(11);
         builder.Property(x => x.FirstName).IsRequired(true).HasMaxLength(50);
         builder.Property(x => x.LastName).IsRequired(true).HasMaxLength(50);

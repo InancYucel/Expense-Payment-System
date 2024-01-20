@@ -1,6 +1,7 @@
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
+using Business.DbExistControls;
 using Data.DbContext;
 using Data.Entity;
 using MediatR;
@@ -18,21 +19,24 @@ public class StaffCommandHandler :
 {
     private readonly EpDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly StaffExist _staffExist;
 
     public StaffCommandHandler(EpDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _staffExist = new StaffExist(_dbContext);
     }
 
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.CreateStaffCommand request, CancellationToken cancellationToken)
     {
+        if (_staffExist.IsStaffExist(request.Model.Id)) //Checking whether StaffId is already registered in the system.
+        {
+            return new ApiResponse<StaffResponse>("This Staff ID is already registered in the system");
+        }
         var entity = _mapper.Map<StaffRequest, Staff>(request.Model);
-        entity.Id = new Random().Next(10000000, 99999999); //TODO içerideki kayıtlarla çakışmasın kontrol lazım
-        
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-
         var mapped = _mapper.Map<Staff, StaffResponse>(entityResult.Entity);
         return new ApiResponse<StaffResponse>(mapped);
     }
@@ -44,13 +48,21 @@ public class StaffCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-        // TODO update ederken zaten halihazırda db de olan bir id ile update edince hata dönüyor bunu handle edip kontrol edebilirsin
-        // TODO staff number key olduğu için değiştirilemiyor
+        
+        if (_staffExist.IsStaffExist(request.Model.Id)) //Checking whether Staff ID is already registered in the system.
+        {
+            return new ApiResponse("This Staff ID is already registered in the system");
+        }
+        
+        if (_staffExist.IsIdentityNumberExist(request.Model.IdentityNumber)) //Checking whether Identity Number is already registered in the system.
+        {
+            return new ApiResponse("This IdentityNumber is already registered in the system");
+        }
         
         fromDb.FirstName = request.Model.FirstName;
         fromDb.LastName = request.Model.LastName;
-        fromDb.Id = request.Model.Id;
         fromDb.IdentityNumber = request.Model.IdentityNumber;
+        fromDb.LastActivityDate = request.Model.LastActivityDate;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();

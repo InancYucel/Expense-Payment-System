@@ -17,4 +17,10 @@ public class StaffExist
         var fromDb = _dbContext.Set<Staff>().FirstOrDefault(x => x.Id == staffId);
         return fromDb != null;
     }
+    public bool IsIdentityNumberExist(string identityNumber)
+    {
+        var fromDb = _dbContext.Set<Staff>().FirstOrDefault(x => x.IdentityNumber == identityNumber);
+        return fromDb != null;
+    }
+    
 }

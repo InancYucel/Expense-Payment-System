@@ -9,6 +9,7 @@ public class StaffRequest : BaseRequest
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime LastActivityDate { get; set; }
+
 }
 
 public class StaffResponse : BaseResponse
