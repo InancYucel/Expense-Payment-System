@@ -15,7 +15,8 @@
 * 🌒 **Masraf Taleplerini Görme:**  Personel **Expenses** bölümü altındaki **GetExpenseWithStaffId** ile  kendi masraf taleplerini görebilir. *
 *  🌓 **Masraf Taleplerini Filtreleme 1:** Personel **Expenses** bölümü altındaki **FilterExpenseWithRequestStatus** ile kendi masraf taleplerini, masraf talebinin kabul edilip edilmeme durumuna göre filtreleyebilir. *    **
 *  🌔 **Masraf Taleplerini Filtreleme 2:** Personel **Expenses** bölümü altındaki **FilterExpenseWithInvoiceAmount** ile kendi masraf taleplerini, masrafın parasal değerine göre filtreleyebilir. **InvoiceAmountBegin** filtrelemenin dip değeri,         **InvoiceAmountEnd:** ise filtrelemenin tepe değeridir.  Örneğin 2 numaralı staffId'ye sahip personelin 250 ve 10000 Amount arasındaki masraf talepleri.* **
-*  🌕 **Reddedilen Talepleri ve Ret Sebeplerini Görme:** Personel Expenses bölümü altındaki **GetRejectedRefundRequest** ile kendi masraf taleplerinden ret olanları görebilir. * 
+*  🌕 **Reddedilen Talepleri ve Ret Sebeplerini Görme:** Personel Expenses bölümü altındaki **GetRejectedRefundRequest** ile kendi masraf taleplerinden ret olanları görebilir. *
+*  **Rapor işlemleri** Personel kendi işlem hareketlerini rapor halinde **PDF** olarak çıktı alabilir.  
 *  ✨*Personel sadece kendi ID'sini bileceği için işlemleri sadece kendisi için uygulayabiliyor. Sistemde kayıtlı mevcut StaffId'ler {**1**,**2**,**3**,**4**}
 * ⭐** Request Status yani istek durumlarının girilebilir üç değeri var bunlar {"**approved**", "**waiting**", "**denied**"} Approved onaylanmış masraf taleplerini, waiting henüz cevap verilmemiş olanları, denied ise bir red açıklaması verilerek reddedilmişleri belirtir.
 
@@ -23,7 +24,7 @@
 * 🌀 **Tüm personellerin taleplerini görebilir:** Yönetici **Expenses** bölümü altındaki **GET/Expenses** ile bütün talepleri görüntüleyebilir.  
 **Talepleri Değerlendirme:** Yönetici **Expenses** bölümü altındaki **ReplyApplication** ile ödemesini cevaplandırmak istediği **expenseId**'yi girer. Body kısmında ödeme tutarı **invoiceAmount**, kur tipi **invoiceCurrencyType**, masraf kategorisi **expenseCategory**,  masraf talebinin cevaplandırılacağı alan **expenseRequestStatus** ve eğer talep reddedilecekse **expensePaymentRefusal** alanlarını doldurur. * **
 * 🌊 **Personel tanımlaması yapabilir:** Yönetici **Staff** bölümü altındaki **POST/Staff** alanından Personelin bilgilerini girerek personeli oluşturur. Daha sonraki masraf ödeme işlemlerinin sorunsuz bir şekilde ilerlemesi için oluşturulan Personele ait **Account** da oluşturulması gerekir.
-*  ⛄ **Ödeme Kategorisi İşlemleri:** Yönetici **PaymentCategories** bölümü altındaki standart işlemler ile kategoriler ekleyebilir, güncelleyebilir, silebilir.   
+*  ⛄ **Ödeme Kategorisi İşlemleri:** Yönetici **PaymentCategories** bölümü altındaki standart işlemler ile kategoriler ekleyebilir, güncelleyebilir, silebilir.
 * ✨ *Sistemde kayıtlı default **expenseCategory**  alanlar {"**Dinner**","**Fuel**","**Material**","**Ticket**,"**Transportation**", "**Health**", "**Repair**"}
 * ⭐ ** Request Status'e verilecebilecek cevaplar  {"**approved**", "**waiting**", "**denied**"} 
 
