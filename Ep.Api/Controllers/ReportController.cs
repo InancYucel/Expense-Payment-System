@@ -5,6 +5,8 @@ using System.Net.Mime;
 using Business.Cqrs;
 using Business.Functional;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Expense_Payment_System.Controllers
 {
@@ -21,6 +23,7 @@ namespace Expense_Payment_System.Controllers
         }
 
         [HttpGet("GetStaffExpenseReportWithStaffId{staffId:int}/{reportType}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")] //Specifies that only users with the admin role can enter
         public async Task<ActionResult> GetStaffExpenseReportWithStaffId(int staffId, string reportType)
         {
             const string reportName = "StaffExpenseReport";
@@ -35,6 +38,7 @@ namespace Expense_Payment_System.Controllers
         }
         
         [HttpGet("ReportPaymentIntensity{reportRangeType}/{reportYear:int}/{reportType}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")] //Specifies that only users with the admin role can enter
         public async Task<ActionResult> ReportPaymentIntensity(string reportRangeType, int reportYear, string reportType)
         {
             if (reportRangeType.ToLower() is not ("daily" or "weekly" or "monthly"))
