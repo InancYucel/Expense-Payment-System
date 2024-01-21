@@ -25,7 +25,7 @@ public class FastTransactionQueryHandler :
     public async Task<ApiResponse<List<FastTransactionResponse>>> Handle(FastTransactionCqrs.GetAllFastTransactionQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<FastTransaction>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<FastTransaction>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<FastTransaction>, List<FastTransactionResponse>>(list);
         return new ApiResponse<List<FastTransactionResponse>>(mappedList);
     }
@@ -33,7 +33,7 @@ public class FastTransactionQueryHandler :
     public async Task<ApiResponse<FastTransactionResponse>> Handle(FastTransactionCqrs.GetFastTransactionByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<FastTransaction>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<FastTransaction>().FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
         
         if (entity == null)
         {

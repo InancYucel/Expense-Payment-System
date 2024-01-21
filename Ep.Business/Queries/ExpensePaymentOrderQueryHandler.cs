@@ -25,7 +25,7 @@ public class ExpensePaymentOrderQueryHandler :
     public async Task<ApiResponse<List<ExpensePaymentOrderResponse>>> Handle(ExpensePaymentOrderCqrs.GetAllExpensePaymentOrderQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<ExpensePaymentOrder>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<ExpensePaymentOrder>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<ExpensePaymentOrder>, List<ExpensePaymentOrderResponse>>(list);
         return new ApiResponse<List<ExpensePaymentOrderResponse>>(mappedList);
     }
@@ -33,7 +33,7 @@ public class ExpensePaymentOrderQueryHandler :
     public async Task<ApiResponse<ExpensePaymentOrderResponse>> Handle(ExpensePaymentOrderCqrs.GetExpensePaymentOrderByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<ExpensePaymentOrder>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<ExpensePaymentOrder>() .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
 
         if (entity == null)
         {

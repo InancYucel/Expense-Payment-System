@@ -25,7 +25,7 @@ public class AccountQueryHandler :
     public async Task<ApiResponse<List<AccountResponse>>> Handle(AccountCqrs.GetAllAccountQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<Account>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<Account>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<Account>, List<AccountResponse>>(list);
         return new ApiResponse<List<AccountResponse>>(mappedList);
     }
@@ -33,7 +33,7 @@ public class AccountQueryHandler :
     public async Task<ApiResponse<AccountResponse>> Handle(AccountCqrs.GetAccountByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<Account>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<Account>().FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
 
         if (entity == null)
         {

@@ -25,7 +25,7 @@ public class PaymentCategoriesQueryHandler :
     public async Task<ApiResponse<List<PaymentCategoriesResponse>>> Handle(PaymentCategoriesCqrs.GetAllPaymentCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<PaymentCategories>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<PaymentCategories>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<PaymentCategories>, List<PaymentCategoriesResponse>>(list);
         return new ApiResponse<List<PaymentCategoriesResponse>>(mappedList);
     }
@@ -33,7 +33,7 @@ public class PaymentCategoriesQueryHandler :
     public async Task<ApiResponse<PaymentCategoriesResponse>> Handle(PaymentCategoriesCqrs.GetPaymentCategoriesByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<PaymentCategories>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<PaymentCategories>().FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
 
         if (entity == null)
         {

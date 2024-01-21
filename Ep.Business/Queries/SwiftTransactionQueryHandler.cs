@@ -25,7 +25,7 @@ public class SwiftTransactionQueryHandler :
     public async Task<ApiResponse<List<SwiftTransactionResponse>>> Handle(SwiftTransactionCqrs.GetAllSwiftTransactionQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<SwiftTransaction>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<SwiftTransaction>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<SwiftTransaction>, List<SwiftTransactionResponse>>(list);
         return new ApiResponse<List<SwiftTransactionResponse>>(mappedList);
     }
@@ -33,7 +33,7 @@ public class SwiftTransactionQueryHandler :
     public async Task<ApiResponse<SwiftTransactionResponse>> Handle(SwiftTransactionCqrs.GetSwiftTransactionByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<SwiftTransaction>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<SwiftTransaction>() .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
 
         if (entity == null)
         {

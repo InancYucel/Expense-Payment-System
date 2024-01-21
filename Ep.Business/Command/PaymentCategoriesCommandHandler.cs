@@ -42,7 +42,7 @@ public class PaymentCategoriesCommandHandler : //Mediator Interfaces
 
     public async Task<ApiResponse> Handle(PaymentCategoriesCqrs.UpdatePaymentCategoriesCommand request, CancellationToken cancellationToken)
     {
-        var fromDb = await _dbContext.Set<PaymentCategories>().Where(x => x.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var fromDb = await _dbContext.Set<PaymentCategories>().Where(x => x.Id == request.Id && x.IsActive == true).FirstOrDefaultAsync(cancellationToken);
         if (fromDb == null)
         {
             return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.

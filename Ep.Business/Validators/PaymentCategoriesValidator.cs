@@ -9,6 +9,6 @@ public class PaymentCategoriesValidator : AbstractValidator<PaymentCategoriesReq
     {
         RuleFor(x => x.Category)
             .NotEmpty().WithMessage("Category cannot be empty")
-            .MaximumLength(20).WithMessage("");
+            .MaximumLength(20).WithMessage("Category length can be a maximum of 20");
     }
 }

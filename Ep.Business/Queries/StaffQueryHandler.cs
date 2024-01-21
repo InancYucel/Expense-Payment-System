@@ -27,7 +27,7 @@ public class StaffQueryHandler :
     public async Task<ApiResponse<List<StaffResponse>>> Handle(StaffCqrs.GetAllStaffQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await _dbContext.Set<Staff>().ToListAsync(cancellationToken);
+        var list = await _dbContext.Set<Staff>().Where(x => x.IsActive == true).ToListAsync(cancellationToken);
         var mappedList = _mapper.Map<List<Staff>, List<StaffResponse>>(list);
         return new ApiResponse<List<StaffResponse>>(mappedList);
     }
@@ -35,7 +35,7 @@ public class StaffQueryHandler :
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.GetStaffByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var entity =  await _dbContext.Set<Staff>() .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        var entity =  await _dbContext.Set<Staff>() .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsActive == true, cancellationToken);
 
         if (entity == null)
         {

@@ -45,6 +45,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(z => z.CurrencyType).IsRequired(true).HasMaxLength(3);
         builder.Property(z => z.Name).IsRequired(false).HasMaxLength(40);
         builder.Property(z => z.OpenDate).IsRequired(true);
+        builder.Property(x => x.IsActive).HasDefaultValue(true);
 
         builder.HasIndex(x => x.Id).IsUnique(true);
         builder.HasKey(z => z.Id);

@@ -14,7 +14,7 @@ public class CategoryExist
 
     public bool IsCategoryExist(string category) //Is there this category within the categories?
     {
-        var fromDb = _dbContext.Set<PaymentCategories>().FirstOrDefault(x => x.Category == category);
+        var fromDb = _dbContext.Set<PaymentCategories>().FirstOrDefault(x => x.Category == category && x.IsActive == true);
         return fromDb != null;
     }
 }
