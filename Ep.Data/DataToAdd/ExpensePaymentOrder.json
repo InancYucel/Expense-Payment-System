@@ -5,7 +5,7 @@
       "PaymentConfirmationDate": "2024-01-18T05:40:06",
       "AccountConfirmingOrder": "Admin",
       "PaymentIban": "IS750001121234563108962099",
-      "PaymentCategory": "Healt",
+      "PaymentCategory": "Health",
       "IsPaymentCompleted": true,
       "PaymentCompletedDate": "2023-05-16T05:50:06"
     },

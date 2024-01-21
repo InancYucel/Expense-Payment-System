@@ -1,3 +1,4 @@
+using System.Globalization;
 using AutoMapper;
 using Base.Response;
 using Business.Cqrs;
@@ -69,11 +70,9 @@ public class ExpensesQueryHandler :
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithRequestStatus request, CancellationToken cancellationToken)
     {
-        // Filter Expense With Request Status
-        var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
-                                                               && string.Equals(x.ExpenseRequestStatus.ToLower(),
-                                                                   request.ExpenseRequestStatus.ToLower(),
-                                                                   StringComparison.Ordinal))
+        var comparer = StringComparer.OrdinalIgnoreCase;
+        // Filter Expense With Request Status // && x.Id == request.StaffId
+        var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId && x.ExpenseRequestStatus.ToLower() == request.ExpenseRequestStatus.ToLower())
             .ToListAsync(cancellationToken);
         
         if (!list.Any())
@@ -89,8 +88,8 @@ public class ExpensesQueryHandler :
     public async Task<ApiResponse<List<ExpensesResponse>>> Handle(ExpensesCqrs.FilterExpenseWithInvoiceAmount request, CancellationToken cancellationToken)
     {
         // Filter Expense With Invoice Amount
-        var list = await _dbContext.Set<Expenses>().Where(x => x.Id == request.StaffId
-                                                               && x.InvoiceAmount == request.InvoiceAmount)
+        var list = await _dbContext.Set<Expenses>().Where(x => x.StaffId == request.StaffId
+                                                               && (x.InvoiceAmount >= request.InvoiceAmountBegin && x.InvoiceAmount <= request.InvoiceAmountEnd))
             .ToListAsync(cancellationToken);
         
         if (!list.Any())

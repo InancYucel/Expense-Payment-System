@@ -30,10 +30,6 @@ public class StaffCommandHandler : //Mediator Interfaces
 
     public async Task<ApiResponse<StaffResponse>> Handle(StaffCqrs.CreateStaffCommand request, CancellationToken cancellationToken)
     {
-        if (_staffExist.IsStaffExist(request.Model.Id)) //Checking whether StaffId is already registered in the system.
-        {
-            return new ApiResponse<StaffResponse>("This Staff ID is already registered in the system");
-        }
         var entity = _mapper.Map<StaffRequest, Staff>(request.Model);
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -47,11 +43,6 @@ public class StaffCommandHandler : //Mediator Interfaces
         if (fromDb == null)
         {
             return new ApiResponse("Record not found"); // If there is no record to update, the function is canceled.
-        }
-        
-        if (_staffExist.IsStaffExist(request.Model.Id)) //Checking whether Staff ID is already registered in the system.
-        {
-            return new ApiResponse("This Staff ID is already registered in the system");
         }
         
         if (_staffExist.IsIdentityNumberExist(request.Model.IdentityNumber)) //Checking whether Identity Number is already registered in the system.
