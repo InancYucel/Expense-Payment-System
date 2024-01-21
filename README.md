@@ -16,7 +16,7 @@
 *  🌓 **Masraf Taleplerini Filtreleme 1:** Personel **Expenses** bölümü altındaki **FilterExpenseWithRequestStatus** ile kendi masraf taleplerini, masraf talebinin kabul edilip edilmeme durumuna göre filtreleyebilir. *    **
 *  🌔 **Masraf Taleplerini Filtreleme 2:** Personel **Expenses** bölümü altındaki **FilterExpenseWithInvoiceAmount** ile kendi masraf taleplerini, masrafın parasal değerine göre filtreleyebilir. **InvoiceAmountBegin** filtrelemenin dip değeri,         **InvoiceAmountEnd:** ise filtrelemenin tepe değeridir.  Örneğin 2 numaralı staffId'ye sahip personelin 250 ve 10000 Amount arasındaki masraf talepleri.* **
 *  🌕 **Reddedilen Talepleri ve Ret Sebeplerini Görme:** Personel Expenses bölümü altındaki **GetRejectedRefundRequest** ile kendi masraf taleplerinden ret olanları görebilir. *
-*  **Rapor işlemleri** Personel kendi işlem hareketlerini rapor halinde **PDF** olarak çıktı alabilir.  
+*  📜 **Rapor işlemleri** Personel kendi işlem hareketlerini rapor halinde **PDF** olarak çıktı alabilir.  
 *  ✨*Personel sadece kendi ID'sini bileceği için işlemleri sadece kendisi için uygulayabiliyor. Sistemde kayıtlı mevcut StaffId'ler {**1**,**2**,**3**,**4**}
 * ⭐** Request Status yani istek durumlarının girilebilir üç değeri var bunlar {"**approved**", "**waiting**", "**denied**"} Approved onaylanmış masraf taleplerini, waiting henüz cevap verilmemiş olanları, denied ise bir red açıklaması verilerek reddedilmişleri belirtir.
 
@@ -63,4 +63,31 @@
 
 ## 🔐 Metotların Yetkilendirmeleri
 * **Expenses** bölümünün **"GetExpenseWithStaffId"**,  **"CreateExpenseWithStaffId"**,  **"UpdateOwnExpenseWithStaffId"**,  **"DeleteOwnExpenseWithStaffId"**,  **"FilterExpenseWithRequestStatus"**,  **"FilterExpenseWithInvoiceAmount"** ve **"GetRejectedRefundRequests"**, metotları **Staff** yetkilendirmesinde
-* Geriye kalana **bütün bölümlerdeki metotlar** **Admin** yetkilendirmesindedir. Ortak yetkilendirme kullanılmamıştır. 
+* Geriye kalana **bütün bölümlerdeki metotlar** **Admin** yetkilendirmesindedir. Ortak yetkilendirme kullanılmamıştır.
+
+### Kullanılan Teknolojiler
+* Entity Framework
+* Fluent Validation
+* CQRS Pattern
+* Middlewares
+* RDLC Report
+* JWT Token
+* Mapper
+* .NET Framework
+
+## Uygulama içi Görüntüler
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/3cf2891a-0599-439a-95be-c10b546880a5)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/6eb2da22-b50b-4bda-84b9-98c631a8f037)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/9a2a5be3-6f67-4d2a-8696-0f3ab147a6be)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/817a48c9-7834-400e-bf5b-a8dd2ae4ec47)
+
+## Databese kayıt örnekleri
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/82d389b9-b73c-4396-af39-3cf2fb8ab306)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/12093310-875e-479f-a24e-79fa2521ec75)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/33e7ebf5-98ac-4137-b5b2-7fe9186ae1a4)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/aaf0c1d8-70a5-417a-b883-f3c208534d9f)
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/7dcc9ded-f659-4931-b1a8-647fa314642b)
+
+
+
+
