@@ -16,7 +16,7 @@
 *  🌓 **Masraf Taleplerini Filtreleme 1:** Personel **Expenses** bölümü altındaki **FilterExpenseWithRequestStatus** ile kendi masraf taleplerini, masraf talebinin kabul edilip edilmeme durumuna göre filtreleyebilir. *    **
 *  🌔 **Masraf Taleplerini Filtreleme 2:** Personel **Expenses** bölümü altındaki **FilterExpenseWithInvoiceAmount** ile kendi masraf taleplerini, masrafın parasal değerine göre filtreleyebilir. **InvoiceAmountBegin** filtrelemenin dip değeri,         **InvoiceAmountEnd:** ise filtrelemenin tepe değeridir.  Örneğin 2 numaralı staffId'ye sahip personelin 250 ve 10000 Amount arasındaki masraf talepleri.* **
 *  🌕 **Reddedilen Talepleri ve Ret Sebeplerini Görme:** Personel Expenses bölümü altındaki **GetRejectedRefundRequest** ile kendi masraf taleplerinden ret olanları görebilir. *
-*  📜 **Rapor işlemleri** Personel kendi işlem hareketlerini rapor halinde **PDF** olarak çıktı alabilir.  
+*  📜 **Rapor işlemleri** Personel kendi işlem hareketlerini rapor halinde **PDF** olarak çıktı alabilir. **Report** bölümü altındaki **GetStaffExpenseReportWithStaffId** metoduna **staffId** ve **reportType(PDF,DOC,XLS)** girdilerini girerek rapor indirme linkini alabiliriz.
 *  ✨*Personel sadece kendi ID'sini bileceği için işlemleri sadece kendisi için uygulayabiliyor. Sistemde kayıtlı mevcut StaffId'ler {**1**,**2**,**3**,**4**}
 * ⭐** Request Status yani istek durumlarının girilebilir üç değeri var bunlar {"**approved**", "**waiting**", "**denied**"} Approved onaylanmış masraf taleplerini, waiting henüz cevap verilmemiş olanları, denied ise bir red açıklaması verilerek reddedilmişleri belirtir.
 
@@ -87,6 +87,10 @@
 ![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/33e7ebf5-98ac-4137-b5b2-7fe9186ae1a4)
 ![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/aaf0c1d8-70a5-417a-b883-f3c208534d9f)
 ![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/7dcc9ded-f659-4931-b1a8-647fa314642b)
+
+## 📑 Rapor Örnekleri
+![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/43c7d54b-d3a1-464f-986d-9e388a1d3811)
+
 
 
 
