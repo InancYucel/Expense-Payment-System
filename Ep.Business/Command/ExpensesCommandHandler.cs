@@ -68,7 +68,7 @@ public class ExpensesCommandHandler : //Mediator Interfaces
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
         fromDb.InvoiceCurrencyType = request.Model.InvoiceCurrencyType;
         fromDb.InvoiceCategory = request.Model.InvoiceCategory;
-        fromDb.InvoiceDate = request.Model.InvoiceCategory;
+        fromDb.InvoiceDate = request.Model.InvoiceDate;
         fromDb.PaymentInstrument = request.Model.PaymentInstrument;
         fromDb.PaymentLocation = request.Model.PaymentLocation;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;
@@ -122,7 +122,7 @@ public class ExpensesCommandHandler : //Mediator Interfaces
         fromDb.InvoiceAmount = request.Model.InvoiceAmount;
         fromDb.InvoiceCurrencyType = request.Model.InvoiceCurrencyType;
         fromDb.InvoiceCategory = request.Model.InvoiceCategory;
-        fromDb.InvoiceDate = request.Model.InvoiceCategory;
+        fromDb.InvoiceDate = request.Model.InvoiceDate;
         fromDb.PaymentInstrument = request.Model.PaymentInstrument;
         fromDb.PaymentLocation = request.Model.PaymentLocation;
         fromDb.ExpenseClaimDescription = request.Model.ExpenseClaimDescription;

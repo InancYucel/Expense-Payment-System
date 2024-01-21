@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Expense_Payment_System.Services;
 
 namespace Expense_Payment_System;
 
@@ -37,6 +38,8 @@ public class Startup
         services.AddDbContext<EpDbContext>(options => options.UseSqlServer(connection));
         services.AddScoped<IInsertRows, InsertRows>();
         services.AddControllers(); //Added Controllers folder classes
+
+        services.AddScoped<IReportService, ReportService>();
         
         //Fluent Validators Install
         services.AddValidatorsFromAssemblyContaining<AccountValidator>(); // register validators
