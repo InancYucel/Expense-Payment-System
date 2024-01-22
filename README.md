@@ -65,6 +65,9 @@
 * **Expenses** bölümünün **"GetExpenseWithStaffId"**,  **"CreateExpenseWithStaffId"**,  **"UpdateOwnExpenseWithStaffId"**,  **"DeleteOwnExpenseWithStaffId"**,  **"FilterExpenseWithRequestStatus"**,  **"FilterExpenseWithInvoiceAmount"** ve **"GetRejectedRefundRequests"**, metotları **Staff** yetkilendirmesinde
 * Geriye kalana **bütün bölümlerdeki metotlar** **Admin** yetkilendirmesindedir. Ortak yetkilendirme kullanılmamıştır.
 
+## 📃 API Dokümantasyonu
+* Projede bulunan bütün metodların dökümantasyonu [**Dökümantasyonu**]
+  
 ### 🍵 Kullanılan Teknolojiler
 * Entity Framework
 * Fluent Validation
