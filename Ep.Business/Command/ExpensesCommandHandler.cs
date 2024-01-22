@@ -47,8 +47,16 @@ public class ExpensesCommandHandler : //Mediator Interfaces
         
         var entity = _mapper.Map<ExpensesRequest, Expenses>(request.Model);
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
-
+        
+        try
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
         var mapped = _mapper.Map<Expenses, ExpensesResponse>(entityResult.Entity);
         return new ApiResponse<ExpensesResponse>(mapped);
     }

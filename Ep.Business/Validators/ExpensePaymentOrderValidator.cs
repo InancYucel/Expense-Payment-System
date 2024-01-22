@@ -13,15 +13,15 @@ public class ExpensePaymentOrderValidator : AbstractValidator<ExpensePaymentOrde
             .NotEmpty().WithMessage("Payment Confirmation Date cannot be empty");
         RuleFor(x => x.AccountConfirmingOrder)
             .NotEmpty().WithMessage("Account Confirming Order cannot be empty")
-            .Length(20).WithMessage("Account Confirming Order Length can be a maximum of 20 characters");
+            .MaximumLength(20).WithMessage("Account Confirming Order Length can be a maximum of 20 characters");
         RuleFor(x => x.AccountConfirmingOrder)
             .NotEmpty().WithMessage("Account Confirming Order cannot be empty")
-            .Length(20).WithMessage("Account Confirming Order Length can be a maximum of 20 characters");
+            .MaximumLength(20).WithMessage("Account Confirming Order Length can be a maximum of 20 characters");
         RuleFor(x => x.PaymentIban)
             .NotEmpty().WithMessage("IBAN cannot be empty")
             .Length(26).WithMessage("IBAN length must be 26 characters");
         RuleFor(x => x.PaymentCategory)
             .NotEmpty().WithMessage("Payment Category cannot be empty")
-            .Length(24).WithMessage("Payment Category length must be 24 characters");
+            .MaximumLength(24).WithMessage("Payment Category length must be 24 characters");
     }
 }

@@ -35,9 +35,9 @@ public class AccountCommandHandler : //Mediator Interfaces
         {
             return new ApiResponse<AccountResponse>("This IBAN is already registered in the system");
         }
-        if (_staffExist.IsStaffExist(request.Model.StaffId)) //Checking whether StaffId is already registered in the system.
+        if (!(_staffExist.IsStaffExist(request.Model.StaffId))) //Checking whether StaffId is already registered in the system.
         {
-            return new ApiResponse<AccountResponse>("This StaffId is already registered in the system");
+            return new ApiResponse<AccountResponse>("This StaffId is not registered in the system");
         }
         var entity = _mapper.Map<AccountRequest, Account>(request.Model); //Mapping RequestAccount to Account
         var entityResult = await _dbContext.AddAsync(entity, cancellationToken);
