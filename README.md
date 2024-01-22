@@ -66,7 +66,7 @@
 * Geriye kalana **bütün bölümlerdeki metotlar** **Admin** yetkilendirmesindedir. Ortak yetkilendirme kullanılmamıştır.
 
 ## 📃 API Dokümantasyonu
-* Projede bulunan bütün metodların dökümantasyonu [**Dökümantasyonu**]
+* Projede bulunan bütün metodların [**Dökümantasyonu**](https://documenter.getpostman.com/view/25623022/2s9YymFitv)
   
 ### 🍵 Kullanılan Teknolojiler
 * Entity Framework
