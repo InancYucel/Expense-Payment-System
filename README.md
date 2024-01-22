@@ -41,7 +41,8 @@
 7. Rider açılış ekranında "Get From Vcs" kısmına Github Repo'sundan aldığımız "https://github.com/InancYucel/Expense-Payment-System.git" linkini kopyalıyoruz. Proje indirilerek Rider tarafından ayağa kaldırılıyor.
 8. Aşağıda yazan **Server**, **Database**, **User Id**, **Password** kısımlarını daha önce not aldığımız şekilde doldurup.  (Expense Payment System  -> Ep.Api -> **appsettings.json** içindeki **ConnectionStrings** ile değiştiriyoruz)
 
-```"ConnectionStrings": {  
+```
+"ConnectionStrings": {  
   "MsSqlConnection": "Server="Your IPv4 Adress"; Database="Your Database Name";Trusted_Connection=false;TrustServerCertificate=True; User Id="Your UserID"; Password="Your Password"; MultipleActiveResultSets=true;Min Pool Size=0;Max Pool Size=100;Pooling=true;"  
 } 
 ```
@@ -94,7 +95,36 @@
 ## 📑 Rapor Örnekleri
 ![image](https://github.com/InancYucel/Expense-Payment-System/assets/48295407/43c7d54b-d3a1-464f-986d-9e388a1d3811)
 
-
+### Eğer tabloları toplu bir şekilde silmek isterseniz toplu script dosyası
+```
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ApplicationUser]') AND type in (N'U'))
+DROP TABLE [dbo].[ApplicationUser]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Account]') AND type in (N'U'))
+DROP TABLE [dbo].[Account]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FastTransaction]') AND type in (N'U'))
+DROP TABLE [dbo].[FastTransaction]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SwiftTransaction]') AND type in (N'U'))
+DROP TABLE [dbo].[SwiftTransaction]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExpensePaymentOrder]') AND type in (N'U'))
+DROP TABLE [dbo].[ExpensePaymentOrder]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Expenses]') AND type in (N'U'))
+DROP TABLE [dbo].[Expenses]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staff]') AND type in (N'U'))
+DROP TABLE [dbo].[Staff]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__EFMigrationsHistory]') AND type in (N'U'))
+DROP TABLE [dbo].[__EFMigrationsHistory]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PaymentCategories]') AND type in (N'U'))
+DROP TABLE [dbo].[PaymentCategories]
+GO
+```
 
 
 
