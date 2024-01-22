@@ -85,7 +85,7 @@ public class ExpensesController : ControllerBase
 
     [HttpPut("UpdateOwnExpenseWithStaffId{staffId:int}, {expenseId:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
-    public async Task<ApiResponse> UpdateExpenseWithStaffId(int staffId, int expenseId, [FromBody] StaffExpensesRequest expenseBody)
+    public async Task<ApiResponse> UpdateExpenseWithStaffId(int staffId, int expenseId, [FromBody] ExpensesRequestForUpdate expenseBody)
     {
         var operation = new ExpensesCqrs.UpdateExpenseWithStaffIdCommand(staffId, expenseId,expenseBody);
         var result = await _mediator.Send(operation);
@@ -101,10 +101,11 @@ public class ExpensesController : ControllerBase
         return result;
     }
     
-    [HttpGet("FilterExpenseWithRequestStatus/{staffId:int}, {requestStatus}")]
+    [HttpGet("FilterExpenseWithRequestStatus/{staffId:int}/{requestStatus}/")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<List<ExpensesResponse>>> FilterExpenseWithRequestStatus(int staffId, string requestStatus)
     {
+        requestStatus = requestStatus.Replace("\n", "");
         if (requestStatus.ToLower() is not ("approved" or "waiting" or "denied"))
         {
             return new ApiResponse<List<ExpensesResponse>>(
@@ -115,7 +116,7 @@ public class ExpensesController : ControllerBase
         return result;
     }
     
-    [HttpGet("FilterExpenseWithInvoiceAmount/{staffId:int}, {invoiceAmountBegin:double}, {invoiceAmountEnd:double}")]
+    [HttpGet("FilterExpenseWithInvoiceAmount/{staffId:int}/{invoiceAmountBegin:double}/{invoiceAmountEnd:double}/")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "staff")]
     public async Task<ApiResponse<List<ExpensesResponse>>> FilterExpenseWithInvoiceAmount(int staffId, double invoiceAmountBegin, double invoiceAmountEnd)
     {

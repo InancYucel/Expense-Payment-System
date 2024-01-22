@@ -14,7 +14,7 @@ public class ExpensesCqrs //Mediator Records
     
     public record GetExpenseByStaffIdQuery(int StaffId) : IRequest<ApiResponse<List<ExpensesResponse>>>;
     public record CreateExpenseWithStaffIdCommand(StaffExpensesRequest Model, int StaffId) : IRequest<ApiResponse<ExpensesResponse>>;
-    public record UpdateExpenseWithStaffIdCommand(int StaffId, int ExpenseId, StaffExpensesRequest Model) : IRequest<ApiResponse>;
+    public record UpdateExpenseWithStaffIdCommand(int StaffId, int ExpenseId, ExpensesRequestForUpdate Model) : IRequest<ApiResponse>;
     public record DeleteExpenseWithStaffIdCommand(int StaffId, int ExpenseId) : IRequest<ApiResponse>;
     public record FilterExpenseWithRequestStatus(int StaffId, string ExpenseRequestStatus) : IRequest<ApiResponse<List<ExpensesResponse>>>;
     public record FilterExpenseWithInvoiceAmount(int StaffId, double InvoiceAmountBegin, double InvoiceAmountEnd) : IRequest<ApiResponse<List<ExpensesResponse>>>;

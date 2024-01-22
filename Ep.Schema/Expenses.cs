@@ -42,8 +42,7 @@ public class StaffExpensesRequest
     public string PaymentInstrument { get; set; }
     public string PaymentLocation { get; set; }
     public string ExpenseClaimDescription { get; set; }
-    public string ExpenseRequestStatus { get; set; } 
-    public string ExpensePaymentRefusal { get; set; }
+
 }
 
 public class ReplyExpensesRequest
